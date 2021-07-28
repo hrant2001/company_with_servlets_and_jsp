@@ -1,8 +1,6 @@
 package com.hrant.service;
 
-import com.hrant.model.Employee;
 import com.hrant.model.Position;
-import com.hrant.repository.EmployeeRepository;
 import com.hrant.repository.PositionRepository;
 import com.hrant.repository.Repository;
 import com.hrant.util.DataSourceFactory;

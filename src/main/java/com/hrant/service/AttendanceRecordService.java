@@ -1,9 +1,7 @@
 package com.hrant.service;
 
 import com.hrant.model.AttendanceRecord;
-import com.hrant.model.Position;
 import com.hrant.repository.AttendanceRecordRepository;
-import com.hrant.repository.PositionRepository;
 import com.hrant.repository.Repository;
 import com.hrant.util.DataSourceFactory;
 import org.slf4j.Logger;
