@@ -36,6 +36,8 @@ public class PositionRepository implements Repository<Position> {
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
+            resultSet.next();
+
             return Converter.resultSetToPosition(resultSet);
         }
     }

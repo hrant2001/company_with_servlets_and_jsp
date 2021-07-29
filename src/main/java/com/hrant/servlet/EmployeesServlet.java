@@ -1,7 +1,11 @@
 package com.hrant.servlet;
 
+import com.hrant.model.Department;
 import com.hrant.model.Employee;
+import com.hrant.model.Position;
+import com.hrant.service.DepartmentService;
 import com.hrant.service.EmployeeService;
+import com.hrant.service.PositionService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -44,6 +48,7 @@ public class EmployeesServlet extends HttpServlet {
 
     private void showAddedRow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Employee> employees = EmployeeService.getEmployees();
+
         request.setAttribute("employees", employees);
         request.getRequestDispatcher("add_employee.jsp").forward(request, response);
     }

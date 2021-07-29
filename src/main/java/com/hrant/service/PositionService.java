@@ -30,7 +30,7 @@ public class PositionService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(PositionService.class);
 
-    public static void findPositionById(int id) {
+    public static Position findPositionById(int id) {
         Position position = null;
         try {
             position = positionRepository.findById(dataSource, id);
@@ -42,6 +42,8 @@ public class PositionService {
             System.out.println(resourceBundle.getString("emp") + " " + resourceBundle.getString("not.found") + " " + id + " "
                     + resourceBundle.getString("not.in.list"));
         }
+
+        return position;
     }
 
     public static List<Position> getPositions() {
@@ -58,6 +60,4 @@ public class PositionService {
         }
         return positions;
     }
-
-
 }

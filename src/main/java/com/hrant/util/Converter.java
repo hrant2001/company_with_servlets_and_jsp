@@ -1,6 +1,7 @@
 package com.hrant.util;
 
 import com.hrant.model.AttendanceRecord;
+import com.hrant.model.Department;
 import com.hrant.model.Employee;
 import com.hrant.model.Position;
 
@@ -27,6 +28,15 @@ public final class Converter {
         position.setShortName(resultSet.getString("position_short_name"));
 
         return position;
+    }
+
+    public static Department resultSetToDepartment(ResultSet resultSet) throws SQLException {
+        Department department = new Department();
+
+        department.setDepartmentId(resultSet.getInt("department_id"));
+        department.setName(resultSet.getString("department_name"));
+
+        return department;
     }
 
     public static AttendanceRecord resultSetToRecord(ResultSet resultSet) throws SQLException {
