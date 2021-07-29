@@ -44,7 +44,7 @@ public class AttendanceRecordService {
         }
     }
 
-    public static List<AttendanceRecord> getPositions() {
+    public static List<AttendanceRecord> getRecords() {
         List<AttendanceRecord> records = null;
         try {
             records = recordRepository.getAll(dataSource);
