@@ -1,7 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.hrant.service.DepartmentService" %>
-<%@ page import="com.hrant.service.PositionService" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,8 +33,8 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Birthday</th>
-                <th>Position</th>
-                <th>Department</th>
+                <th>Position Id</th>
+                <th>Department Id</th>
                 <th>Action</th>
 
             </tr>
@@ -47,8 +45,8 @@
                     <td>${emp.getFName()}</td>
                     <td>${emp.getLName()}</td>
                     <td>${emp.getBirthday()}</td>
-                    <td>${PositionService.findPositionById(emp.getPositionId()).name}</td>
-                    <td>${DepartmentService.findDepartmentById(emp.getDepartmentId()).name}</td>
+                    <td>${emp.getPositionId()}</td>
+                    <td>${emp.getDepartmentId()}</td>
                 </tr>
             </c:forEach>
             <tr>

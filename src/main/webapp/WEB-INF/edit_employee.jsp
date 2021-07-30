@@ -1,7 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.hrant.service.DepartmentService" %>
-<%@ page import="com.hrant.service.PositionService" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,8 +33,8 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Birthday</th>
-                <th>Position</th>
-                <th>Department</th>
+                <th>Position Id</th>
+                <th>Department Id</th>
                 <th>Action</th>
 
             </tr>
@@ -64,12 +62,12 @@
                             </label></td>
                         <td>
                             <label>
-                                <input type="text" value="<c:out value='${PositionService.findPositionById(emp.getPositionId()).name}' />" name="position"
+                                <input type="text" value="<c:out value='${emp.getPositionId()}' />" name="position"
                                        required="required">
                             </label></td>
                         <td>
                             <label>
-                                <input type="text" value="<c:out value='${DepartmentService.findDepartmentById(emp.getDepartmentId()).name}' />" name="department"
+                                <input type="text" value="<c:out value='${emp.getDepartmentId()}' />" name="department"
                                        required="required">
                             </label></td>
                         <td>
