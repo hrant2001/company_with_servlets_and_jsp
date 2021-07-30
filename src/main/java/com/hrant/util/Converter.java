@@ -16,6 +16,8 @@ public final class Converter {
         employee.setFName(resultSet.getString("fname"));
         employee.setLName(resultSet.getString("lname"));
         employee.setBirthday(resultSet.getDate("birthday").toLocalDate());
+        employee.setPositionId(resultSet.getInt("position_id"));
+        employee.setDepartmentId(resultSet.getInt("department_id"));
 
         return employee;
     }

@@ -49,29 +49,29 @@
 
                 <td>
                     <label>
-                        <input type="text" value="<c:out value='${user.fname}' />" name="fname"
+                        <input type="text" value="<c:out value='${e.fname}' />" name="fname"
                                required="required">
                     </label>
                 </td>
                 <td>
                     <label>
-                        <input type="text" value="<c:out value='${user.lname}' />" name="lname"
+                        <input type="text" value="<c:out value='${e.lname}' />" name="lname"
                                required="required">
                     </label>
                 </td>
                 <td>
                     <label>
-                        <input type="text" value="<c:out value='${user.birthday}' />" name="birthday"
+                        <input type="text" value="<c:out value='${e.birthday}' />" name="birthday"
                                required="required">
                     </label></td>
                 <td>
                     <label>
-                        <input type="text" value="<c:out value='${user.position}' />" name="position"
+                        <input type="text" value="<c:out value='${e.position}' />" name="position"
                                required="required">
                     </label></td>
                 <td>
                     <label>
-                        <input type="text" value="<c:out value='${user.department}' />" name="department"
+                        <input type="text" value="<c:out value='${e.department}' />" name="department"
                                required="required">
                     </label></td>
                 <td>
