@@ -24,10 +24,35 @@
 </div>
 
 <div class="container">
-    <p>Search the table for first names, last names, birthdays, positions or
-        departments:</p>
-    <input class="form-control" id="myInput" type="text" placeholder="Search..">
-    <br>
+    <%--    <p>Search the table for first names, last names, birthdays, positions or--%>
+    <%--        departments:</p>--%>
+    <%--    <input class="form-control" id="myInput" type="text" placeholder="Search..">--%>
+    <%--    <br>--%>
+    <div style="float: left; margin-right: 20px">
+        <p>Search for the employee first name</p>
+        <input class="form-control" id="fname" type="search" placeholder="First Name...">
+        &nbsp;
+    </div>
+
+    <div style="float: left; margin-right: 20px">
+        <p>Search for the employee last name</p>
+        <input class="form-control" id="lname" type="search" placeholder="Last Name...">
+    </div>
+
+    <div style="float: left; margin-right: 20px">
+        <p>Search for the employee birthday</p>
+        <input class="form-control" id="birthday" type="search" placeholder="Birthday...">
+    </div>
+
+    <div style="float: left; margin-right: 20px">
+        <p>Search for the position</p>
+        <input class="form-control basicAutoComplete" id="positions" type="text" autocomplete="off" placeholder="Position...">
+    </div>
+
+    <div style="float: left">
+        <p>Search for the department</p>
+        <input class="form-control basicAutoComplete" id="departments" type="text" autocomplete="off" placeholder="Department...">
+    </div>
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -59,15 +84,15 @@
     <a href="<%=request.getContextPath()%>/new-emp" class="btn btn-success">Add employee</a>
 </div>
 
-<script>
-    $(document).ready(function () {
-        $("#myInput").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            $("#myTable tr").filter(function () {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
+<%--<script>--%>
+<%--    $(document).ready(function () {--%>
+<%--        $("#myInput").on("keyup", function () {--%>
+<%--            var value = $(this).val().toLowerCase();--%>
+<%--            $("#myTable tr").filter(function () {--%>
+<%--                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)--%>
+<%--            });--%>
+<%--        });--%>
+<%--    });--%>
+<%--</script>--%>
 </body>
 </html>
