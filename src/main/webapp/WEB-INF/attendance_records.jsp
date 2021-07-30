@@ -29,12 +29,27 @@
 </div>
 
 <div class="container">
-    <p>Search the table for the entrance date</p>
-    <input id="datepicker" width="270">
-    <br>
-    <p>Search the table for the employee name</p>
-    <input class="form-control" id="myInput" type="search" placeholder="Search...">
-    <br>
+    <div style="float: left; margin-right: 20px">
+        <p>Search the table for the entrance date</p>
+        <input id="datepicker" width="270">
+        &nbsp;
+    </div>
+
+    <div style="float: left; margin-right: 20px">
+        <p>Search the table for the employee name</p>
+        <input class="form-control" id="myInput" type="search" placeholder="Search...">
+    </div>
+
+    <div style="float: left; margin-right: 20px">
+        <p>Search the table for the position</p>
+        <input class="form-control basicAutoComplete" id="positions" type="text" autocomplete="off">
+    </div>
+
+    <div style="float: left">
+        <p>Search the table for the department</p>
+        <input class="form-control basicAutoComplete" id="departments" type="text" autocomplete="off">
+    </div>
+
     <table class="table table-bordered table-striped">
         <thead>
         <tr>
@@ -74,6 +89,14 @@
         format: 'yyyy-mm-dd'
     });
 </script>
+
+<%--<script>--%>
+<%--    $('.basicAutoComplete').autoComplete({--%>
+<%--        resolverSettings: {--%>
+<%--            url: 'testdata/test-list.json'--%>
+<%--        }--%>
+<%--    });--%>
+<%--</script>--%>
 
 </body>
 </html>

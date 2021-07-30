@@ -23,10 +23,6 @@
     </div>
 
     <div class="container">
-        <p>Search the table for first names, last names, birthdays, positions or
-            departments:</p>
-        <input class="form-control" id="myInput" type="text" placeholder="Search..">
-        <br>
         <table class="table table-bordered table-striped">
             <thead>
             <tr>
@@ -85,17 +81,6 @@
             </tbody>
         </table>
     </div>
-
-    <script>
-        $(document).ready(function () {
-            $("#myInput").on("keyup", function () {
-                var value = $(this).val().toLowerCase();
-                $("#myTable tr").filter(function () {
-                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-                });
-            });
-        });
-    </script>
 </form>
 </body>
 </html>
