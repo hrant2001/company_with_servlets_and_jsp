@@ -37,7 +37,7 @@
 
     <div style="float: left">
         <p>Search for the employee full name</p>
-        <input class="form-control" id="employee_name" type="search" placeholder="Full Name...">
+        <input class="form-control" id="employee_name" type="search" onkeyup="filter(id, 3)" placeholder="Full Name...">
     </div>
 
     <table class="table table-bordered table-striped">
@@ -80,6 +80,27 @@
     });
 </script>
 
+<script>
+    function filter(inputId, index) {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById(inputId);
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[index];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
 <%--<script>--%>
 <%--    $('.basicAutoComplete').autoComplete({--%>
 <%--        resolverSettings: {--%>

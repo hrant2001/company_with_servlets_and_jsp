@@ -30,30 +30,30 @@
     <%--    <br>--%>
     <div style="float: left; margin-right: 20px">
         <p>Search for the employee first name</p>
-        <input class="form-control" id="fname" type="search" placeholder="First Name...">
+        <input class="form-control" id="fname" type="text" onkeyup="filter(id, 1)" placeholder="First Name...">
         &nbsp;
     </div>
 
     <div style="float: left; margin-right: 20px">
         <p>Search for the employee last name</p>
-        <input class="form-control" id="lname" type="search" placeholder="Last Name...">
+        <input class="form-control" id="lname" type="text" onkeyup="filter(id, 2)" placeholder="Last Name...">
     </div>
 
     <div style="float: left; margin-right: 20px">
         <p>Search for the employee birthday</p>
-        <input class="form-control" id="birthday" type="search" placeholder="Birthday...">
+        <input class="form-control" id="birthday" type="text" onkeyup="filter(id, 3)" placeholder="Birthday...">
     </div>
 
     <div style="float: left; margin-right: 20px">
         <p>Search for the position</p>
-        <input class="form-control basicAutoComplete" id="positions" type="text" autocomplete="off" placeholder="Position...">
+        <input class="form-control" id="position" type="text" onkeyup="filter(id, 4)" placeholder="Position...">
     </div>
 
     <div style="float: left">
         <p>Search for the department</p>
-        <input class="form-control basicAutoComplete" id="departments" type="text" autocomplete="off" placeholder="Department...">
+        <input class="form-control" id="department" type="text" onkeyup="filter(id, 5)" placeholder="Department...">
     </div>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" id="myTable">
         <thead>
         <tr>
             <th>Employee Id</th>
@@ -65,7 +65,7 @@
             <th>Action</th>
         </tr>
         </thead>
-        <tbody id="myTable">
+        <tbody id="tableBody">
         <c:forEach var="emp" items="${employees}">
             <tr>
                 <td>${emp.getEmployeeId()}</td>
@@ -83,6 +83,29 @@
 
     <a href="<%=request.getContextPath()%>/new-emp" class="btn btn-success">Add employee</a>
 </div>
+
+<script>
+    function filter(inputId, index) {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById(inputId);
+        filter = input.value.toUpperCase();
+        table = document.getElementById("myTable");
+        tr = table.getElementsByTagName("tr");
+
+        for (i = 0; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[index];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
 
 <%--<script>--%>
 <%--    $(document).ready(function () {--%>
