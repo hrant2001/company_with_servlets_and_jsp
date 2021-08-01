@@ -1,5 +1,6 @@
 package com.hrant.servlet;
 
+import com.hrant.dto.EmployeeDto;
 import com.hrant.model.Department;
 import com.hrant.model.Employee;
 import com.hrant.model.Position;
@@ -47,9 +48,9 @@ public class EmployeesServlet extends HttpServlet {
     }
 
     private void showAddedRow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Employee> employees = EmployeeService.getEmployees();
+        List<EmployeeDto> employeesDto = EmployeeService.getEmployees();
 
-        request.setAttribute("employees", employees);
+        request.setAttribute("employees", employeesDto);
         request.getRequestDispatcher("add_employee.jsp").forward(request, response);
     }
 
@@ -73,9 +74,9 @@ public class EmployeesServlet extends HttpServlet {
     private void showEditingRow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
 
-        Employee existingEmployee = EmployeeService.findEmployeeById(id);
-        List<Employee> employees = EmployeeService.getEmployees();
-        request.setAttribute("employees", employees);
+        EmployeeDto existingEmployee = EmployeeService.findEmployeeById(id);
+        List<EmployeeDto> employeesDto = EmployeeService.getEmployees();
+        request.setAttribute("employees", employeesDto);
         request.setAttribute("employee", existingEmployee);
         request.getRequestDispatcher("edit_employee.jsp").forward(request, response);
     }
@@ -93,8 +94,8 @@ public class EmployeesServlet extends HttpServlet {
     }
 
     private void listEmployees(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<Employee> employees = EmployeeService.getEmployees();
-        request.setAttribute("employees", employees);
+        List<EmployeeDto> employeesDto = EmployeeService.getEmployees();
+        request.setAttribute("employees", employeesDto);
         request.getRequestDispatcher("employees.jsp").forward(request, response);
     }
 }

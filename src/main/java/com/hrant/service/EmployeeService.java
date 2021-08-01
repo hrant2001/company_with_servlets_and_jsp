@@ -1,9 +1,11 @@
 package com.hrant.service;
 
+import com.hrant.dto.EmployeeDto;
 import com.hrant.model.Employee;
 import com.hrant.repository.EmployeeRepository;
 import com.hrant.repository.Repository;
 import com.hrant.util.DataSourceFactory;
+import com.hrant.util.DtoConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -114,7 +116,7 @@ public class EmployeeService {
         employees.forEach(System.out::println);
     }
 
-    public static Employee findEmployeeById(int id) {
+    public static EmployeeDto findEmployeeById(int id) {
         Employee employee;
         try {
             employee = employeeRepository.findById(dataSource, id);
@@ -128,7 +130,7 @@ public class EmployeeService {
                     + resourceBundle.getString("not.in.list"));
         }
 
-        return employee;
+        return DtoConverter.employeeToDto(employee);
     }
 
     /**
@@ -153,7 +155,7 @@ public class EmployeeService {
     /**
      * Prints the list of the employees.
      */
-    public static List<Employee> getEmployees() {
+    public static List<EmployeeDto> getEmployees() {
         List<Employee> employees = null;
         try {
             employees = employeeRepository.getAll(dataSource);
@@ -165,6 +167,11 @@ public class EmployeeService {
             LOGGER.warn("The list of employees is empty");
             return new ArrayList<>();
         }
-        return employees;
+        List<EmployeeDto> employeesDto = new ArrayList<>();
+        for (Employee e : employees) {
+            employeesDto.add(DtoConverter.employeeToDto(e));
+        }
+
+        return employeesDto;
     }
 }
