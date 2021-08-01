@@ -1,7 +1,7 @@
 package com.hrant.repository;
 
 import com.hrant.model.Employee;
-import com.hrant.util.Converter;
+import com.hrant.util.ResultSetConverter;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -75,7 +75,7 @@ public class EmployeeRepository implements Repository<Employee> {
             preparedStatement.setString(1, lastName);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
-                employees.add(Converter.resultSetToEmployee(resultSet));
+                employees.add(ResultSetConverter.resultSetToEmployee(resultSet));
             }
 
             return employees;
@@ -92,7 +92,7 @@ public class EmployeeRepository implements Repository<Employee> {
 
             resultSet.next();
 
-            return Converter.resultSetToEmployee(resultSet);
+            return ResultSetConverter.resultSetToEmployee(resultSet);
         }
     }
 
@@ -120,7 +120,7 @@ public class EmployeeRepository implements Repository<Employee> {
             ResultSet resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                employees.add(Converter.resultSetToEmployee(resultSet));
+                employees.add(ResultSetConverter.resultSetToEmployee(resultSet));
             }
             return employees;
         }

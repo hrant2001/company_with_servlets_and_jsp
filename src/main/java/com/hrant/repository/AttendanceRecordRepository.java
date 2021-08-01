@@ -1,7 +1,7 @@
 package com.hrant.repository;
 
 import com.hrant.model.AttendanceRecord;
-import com.hrant.util.Converter;
+import com.hrant.util.ResultSetConverter;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -35,7 +35,7 @@ public class AttendanceRecordRepository implements Repository<AttendanceRecord> 
             ResultSet resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                records.add(Converter.resultSetToRecord(resultSet));
+                records.add(ResultSetConverter.resultSetToRecord(resultSet));
             }
             return records;
         }
@@ -50,7 +50,7 @@ public class AttendanceRecordRepository implements Repository<AttendanceRecord> 
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
 
-            return Converter.resultSetToRecord(resultSet);
+            return ResultSetConverter.resultSetToRecord(resultSet);
         }
     }
 

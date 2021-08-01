@@ -1,7 +1,7 @@
 package com.hrant.repository;
 
 import com.hrant.model.Department;
-import com.hrant.util.Converter;
+import com.hrant.util.ResultSetConverter;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -35,7 +35,7 @@ public class DepartmentRepository implements Repository<Department> {
             ResultSet resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                departments.add(Converter.resultSetToDepartment(resultSet));
+                departments.add(ResultSetConverter.resultSetToDepartment(resultSet));
             }
             return departments;
         }
@@ -52,7 +52,7 @@ public class DepartmentRepository implements Repository<Department> {
 
             resultSet.next();
 
-            return Converter.resultSetToDepartment(resultSet);
+            return ResultSetConverter.resultSetToDepartment(resultSet);
         }
     }
     @Override

@@ -1,7 +1,7 @@
 package com.hrant.repository;
 
 import com.hrant.model.Position;
-import com.hrant.util.Converter;
+import com.hrant.util.ResultSetConverter;
 
 import javax.sql.DataSource;
 import java.sql.*;
@@ -38,7 +38,7 @@ public class PositionRepository implements Repository<Position> {
 
             resultSet.next();
 
-            return Converter.resultSetToPosition(resultSet);
+            return ResultSetConverter.resultSetToPosition(resultSet);
         }
     }
 
@@ -55,7 +55,7 @@ public class PositionRepository implements Repository<Position> {
             ResultSet resultSet = statement.executeQuery(sql);
 
             while (resultSet.next()) {
-                positions.add(Converter.resultSetToPosition(resultSet));
+                positions.add(ResultSetConverter.resultSetToPosition(resultSet));
             }
             return positions;
         }
