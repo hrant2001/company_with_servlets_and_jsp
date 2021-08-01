@@ -1,6 +1,6 @@
 package com.hrant.servlet;
 
-import com.hrant.model.AttendanceRecord;
+import com.hrant.dto.AttendanceRecordDto;
 import com.hrant.service.AttendanceRecordService;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
@@ -13,7 +13,7 @@ import java.util.List;
 public class AttendanceRecordsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        List<AttendanceRecord> attendance_records = AttendanceRecordService.getRecords();
+        List<AttendanceRecordDto> attendance_records = AttendanceRecordService.getRecords();
         request.setAttribute("attendance_records", attendance_records);
         request.getRequestDispatcher("/attendance_records.jsp").forward(request, response);
     }

@@ -1,7 +1,5 @@
 package com.hrant.dto;
 
-import com.hrant.model.Employee;
-
 import java.time.LocalDate;
 import java.util.Objects;
 

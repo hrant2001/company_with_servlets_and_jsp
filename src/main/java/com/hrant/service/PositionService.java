@@ -1,9 +1,11 @@
 package com.hrant.service;
 
+import com.hrant.dto.PositionDto;
 import com.hrant.model.Position;
 import com.hrant.repository.PositionRepository;
 import com.hrant.repository.Repository;
 import com.hrant.util.DataSourceFactory;
+import com.hrant.util.DtoConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -30,7 +32,7 @@ public class PositionService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(PositionService.class);
 
-    public static Position findPositionById(int id) {
+    public static PositionDto findPositionById(int id) {
         Position position = null;
         try {
             position = positionRepository.findById(dataSource, id);
@@ -43,10 +45,10 @@ public class PositionService {
                     + resourceBundle.getString("not.in.list"));
         }
 
-        return position;
+        return DtoConverter.positionToDto(position);
     }
 
-    public static List<Position> getPositions() {
+    public static List<PositionDto> getPositions() {
         List<Position> positions = null;
         try {
             positions = positionRepository.getAll(dataSource);
@@ -58,6 +60,11 @@ public class PositionService {
             LOGGER.warn("The list of employees is empty");
             return new ArrayList<>();
         }
-        return positions;
+        List<PositionDto> positionsDto = new ArrayList<>();
+        for (Position p : positions) {
+            positionsDto.add(DtoConverter.positionToDto(p));
+        }
+
+        return positionsDto;
     }
 }

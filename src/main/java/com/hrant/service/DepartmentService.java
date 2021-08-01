@@ -1,9 +1,11 @@
 package com.hrant.service;
 
+import com.hrant.dto.DepartmentDto;
 import com.hrant.model.Department;
 import com.hrant.repository.DepartmentRepository;
 import com.hrant.repository.Repository;
 import com.hrant.util.DataSourceFactory;
+import com.hrant.util.DtoConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,7 +30,7 @@ public class DepartmentService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(DepartmentService.class);
 
-    public static Department findDepartmentById(int id) {
+    public static DepartmentDto findDepartmentById(int id) {
         Department department = null;
         try {
             department = departmentRepository.findById(dataSource, id);
@@ -41,10 +43,10 @@ public class DepartmentService {
                     + resourceBundle.getString("not.in.list"));
         }
 
-        return department;
+        return DtoConverter.departmentToDto(department);
     }
 
-    public static List<Department> getDepartments() {
+    public static List<DepartmentDto> getDepartments() {
         List<Department> departments = null;
         try {
             departments = departmentRepository.getAll(dataSource);
@@ -56,6 +58,11 @@ public class DepartmentService {
             LOGGER.warn("The list of employees is empty");
             return new ArrayList<>();
         }
-        return departments;
+        List<DepartmentDto> departmentsDto = new ArrayList<>();
+        for (Department d : departments) {
+            departmentsDto.add(DtoConverter.departmentToDto(d));
+        }
+
+        return departmentsDto;
     }
 }
