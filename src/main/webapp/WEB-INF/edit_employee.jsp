@@ -53,18 +53,18 @@
                         </td>
                         <td>
                             <label>
-                                <input type="text" value="<c:out value='${emp.getBirthday()}' />" name="birthday"
+                                <input type="date" value="<c:out value='${emp.getBirthday()}' />" name="birthday"
                                        required="required">
                             </label></td>
                         <td>
                             <label>
-                                <input type="text" value="<c:out value='${emp.getPositionId()}' />" name="position"
-                                       required="required">
+                                <input type="number" value="<c:out value='${emp.getPositionId()}' />" name="position"
+                                       required="required" min="1">
                             </label></td>
                         <td>
                             <label>
-                                <input type="text" value="<c:out value='${emp.getDepartmentId()}' />" name="department"
-                                       required="required">
+                                <input type="number" value="<c:out value='${emp.getDepartmentId()}' />" name="department"
+                                       required="required" min="1">
                             </label></td>
                         <td>
                             <button type="submit" class="btn btn-success">Save</button>

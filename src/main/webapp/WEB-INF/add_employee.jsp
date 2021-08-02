@@ -61,18 +61,18 @@
                 </td>
                 <td>
                     <label>
-                        <input type="text" value="<c:out value='${e.birthday}' />" name="birthday"
+                        <input type="date" value="<c:out value='${e.birthday}' />" name="birthday"
                                required="required">
                     </label></td>
                 <td>
                     <label>
-                        <input type="text" value="<c:out value='${e.position}' />" name="position"
-                               required="required">
+                        <input type="number" value="<c:out value='${e.position}' />" name="position"
+                               required="required" min="1">
                     </label></td>
                 <td>
                     <label>
-                        <input type="text" value="<c:out value='${e.department}' />" name="department"
-                               required="required">
+                        <input type="number" value="<c:out value='${e.department}' />" name="department"
+                               required="required" min="1">
                     </label></td>
                 <td>
                     <button type="submit" class="btn btn-success">Save</button>
