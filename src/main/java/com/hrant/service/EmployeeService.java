@@ -34,18 +34,18 @@ public class EmployeeService {
     /**
      * Adds a new employee to the database.
      *
-     * @param employee The employee to add to the list.
+     * @param employeeDto The employee to add to the list.
      */
-    public static void addEmployee(Employee employee) {
+    public static void addEmployee(EmployeeDto employeeDto) {
         try {
-            if (employeeRepository.insert(dataSource, employee) == 1) {
-                LOGGER.warn("The employee " + employee.getFName() + " " + employee.getLName() + " " + employee.getBirthday() + " is already in the list");
-                System.out.println("\n" + resourceBundle.getString("emp") + employee.getFName() + " " + employee.getLName() + " " + employee.getBirthday() + " " + resourceBundle.getString("in-list") + "\n");
+            if (employeeRepository.insert(dataSource, DtoConverter.dtoToEmployee(employeeDto)) == 1) {
+                LOGGER.warn("The employee " + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " is already in the list");
+                System.out.println("\n" + resourceBundle.getString("emp") + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " " + resourceBundle.getString("in-list") + "\n");
             } else {
-                LOGGER.info("The employee " + employee.getFName() + " "
-                        + employee.getLName() + " " + employee.getBirthday() + " was successfully added to the list of employees");
-                System.out.println("\n" + resourceBundle.getString("emp") + " " + employee.getFName() + " "
-                        + employee.getLName() + " " + employee.getBirthday() + " " + resourceBundle.getString("success.add") + "\n");
+                LOGGER.info("The employee " + employeeDto.getFName() + " "
+                        + employeeDto.getLName() + " " + employeeDto.getBirthday() + " was successfully added to the list of employees");
+                System.out.println("\n" + resourceBundle.getString("emp") + " " + employeeDto.getFName() + " "
+                        + employeeDto.getLName() + " " + employeeDto.getBirthday() + " " + resourceBundle.getString("success.add") + "\n");
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -55,18 +55,18 @@ public class EmployeeService {
     /**
      * Deletes an employee from the database.
      *
-     * @param employee The employee to delete from the list.
+     * @param employeeDto The employee to delete from the list.
      */
-    public static void deleteEmployee(Employee employee) {
+    public static void deleteEmployee(EmployeeDto employeeDto) {
         try {
-            if (employeeRepository.delete(dataSource, employee) == 0) {
-                LOGGER.info("The employee " + employee.getFName() + " " + employee.getLName() +
-                        " " + employee.getBirthday() + " was successfully deleted from the list of employees");
-                System.out.println("\n" + resourceBundle.getString("emp") + " " + employee.getFName() + " " + employee.getLName() +
-                        " " + employee.getBirthday() + " " + resourceBundle.getString("success.delete") + "\n");
+            if (employeeRepository.delete(dataSource, DtoConverter.dtoToEmployee(employeeDto)) == 0) {
+                LOGGER.info("The employee " + employeeDto.getFName() + " " + employeeDto.getLName() +
+                        " " + employeeDto.getBirthday() + " was successfully deleted from the list of employees");
+                System.out.println("\n" + resourceBundle.getString("emp") + " " + employeeDto.getFName() + " " + employeeDto.getLName() +
+                        " " + employeeDto.getBirthday() + " " + resourceBundle.getString("success.delete") + "\n");
             } else {
-                LOGGER.warn("The employee " + employee.getFName() + " " + employee.getLName() + " " + employee.getBirthday() + " was not found in the list of employees");
-                System.out.println("\n" + resourceBundle.getString("emp") + " " + employee.getFName() + " " + employee.getLName() + " " + employee.getBirthday() + " " + resourceBundle.getString("not.in.list") + "\n");
+                LOGGER.warn("The employee " + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " was not found in the list of employees");
+                System.out.println("\n" + resourceBundle.getString("emp") + " " + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " " + resourceBundle.getString("not.in.list") + "\n");
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -87,9 +87,9 @@ public class EmployeeService {
         }
     }
 
-    public static void updateEmployee(int id, Employee employee) {
+    public static void updateEmployee(int id, EmployeeDto employeeDto) {
         try {
-            employeeRepository.update(id, dataSource, employee);
+            employeeRepository.update(id, dataSource, DtoConverter.dtoToEmployee(employeeDto));
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }

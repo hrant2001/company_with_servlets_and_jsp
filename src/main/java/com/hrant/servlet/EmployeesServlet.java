@@ -3,7 +3,6 @@ package com.hrant.servlet;
 import com.hrant.dto.EmployeeDto;
 import com.hrant.dto.PositionDto;
 import com.hrant.dto.DepartmentDto;
-import com.hrant.model.Employee;
 import com.hrant.service.DepartmentService;
 import com.hrant.service.EmployeeService;
 import com.hrant.service.PositionService;
@@ -65,7 +64,7 @@ public class EmployeesServlet extends HttpServlet {
         int position = Integer.parseInt(request.getParameter("position"));
         int department = Integer.parseInt(request.getParameter("department"));
 
-        EmployeeService.addEmployee(new Employee(fname, lname, birthday, position, department));
+        EmployeeService.addEmployee(new EmployeeDto(fname, lname, birthday, position, department));
         response.sendRedirect("employees");
     }
 
@@ -98,7 +97,7 @@ public class EmployeesServlet extends HttpServlet {
         int position = Integer.parseInt(request.getParameter("position"));
         int department = Integer.parseInt(request.getParameter("department"));
 
-        EmployeeService.updateEmployee(id, new Employee(fname, lname, birthday, position, department));
+        EmployeeService.updateEmployee(id, new EmployeeDto(fname, lname, birthday, position, department));
         response.sendRedirect("employees");
     }
 

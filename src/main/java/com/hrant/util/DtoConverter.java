@@ -53,4 +53,17 @@ public class DtoConverter {
 
         return recordDto;
     }
+
+    public static Employee dtoToEmployee(EmployeeDto employeeDto) {
+        Employee employee = new Employee();
+
+        employee.setEmployeeId(employeeDto.getEmployeeId());
+        employee.setFName(employeeDto.getFName());
+        employee.setLName(employeeDto.getLName());
+        employee.setBirthday(employeeDto.getBirthday());
+        employee.setPositionId(employeeDto.getPositionId());
+        employee.setDepartmentId(employeeDto.getDepartmentId());
+
+        return employee;
+    }
 }

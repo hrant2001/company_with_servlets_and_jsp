@@ -1,5 +1,6 @@
 package com.hrant.repository;
 
+import com.hrant.dto.EmployeeDto;
 import com.hrant.model.Employee;
 import com.hrant.util.ResultSetConverter;
 

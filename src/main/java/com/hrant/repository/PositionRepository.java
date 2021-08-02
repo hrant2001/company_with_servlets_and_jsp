@@ -1,5 +1,6 @@
 package com.hrant.repository;
 
+import com.hrant.dto.PositionDto;
 import com.hrant.model.Position;
 import com.hrant.util.ResultSetConverter;
 
