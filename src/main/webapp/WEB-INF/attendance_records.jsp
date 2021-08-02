@@ -31,7 +31,7 @@
 <div class="container">
     <div style="float: left; margin-right: 20px">
         <p>Search for the entrance date</p>
-        <input id="datepicker" width="270">
+        <input id="datepicker" width="270" onkeyup="filter(id, 1)">
         &nbsp;
     </div>
 
