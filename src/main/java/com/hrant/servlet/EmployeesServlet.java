@@ -1,9 +1,9 @@
 package com.hrant.servlet;
 
 import com.hrant.dto.EmployeeDto;
-import com.hrant.model.Department;
+import com.hrant.dto.PositionDto;
+import com.hrant.dto.DepartmentDto;
 import com.hrant.model.Employee;
-import com.hrant.model.Position;
 import com.hrant.service.DepartmentService;
 import com.hrant.service.EmployeeService;
 import com.hrant.service.PositionService;
@@ -49,8 +49,12 @@ public class EmployeesServlet extends HttpServlet {
 
     private void showAddedRow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<EmployeeDto> employeesDto = EmployeeService.getEmployees();
+        int positionsNumber = PositionService.getPositions().size();
+        int departmentsNumber = DepartmentService.getDepartments().size();
 
         request.setAttribute("employees", employeesDto);
+        request.setAttribute("positions_number", positionsNumber);
+        request.setAttribute("departments_number", departmentsNumber);
         request.getRequestDispatcher("add_employee.jsp").forward(request, response);
     }
 
@@ -76,8 +80,13 @@ public class EmployeesServlet extends HttpServlet {
 
         EmployeeDto existingEmployee = EmployeeService.findEmployeeById(id);
         List<EmployeeDto> employeesDto = EmployeeService.getEmployees();
+        int positionsNumber = PositionService.getPositions().size();
+        int departmentsNumber = DepartmentService.getDepartments().size();
+
         request.setAttribute("employees", employeesDto);
         request.setAttribute("employee", existingEmployee);
+        request.setAttribute("positions_number", positionsNumber);
+        request.setAttribute("departments_number", departmentsNumber);
         request.getRequestDispatcher("edit_employee.jsp").forward(request, response);
     }
 
@@ -95,7 +104,13 @@ public class EmployeesServlet extends HttpServlet {
 
     private void listEmployees(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<EmployeeDto> employeesDto = EmployeeService.getEmployees();
+        List<PositionDto> positionsDto = PositionService.getPositions();
+        List<DepartmentDto> departmentsDto = DepartmentService.getDepartments();
+
         request.setAttribute("employees", employeesDto);
+        request.setAttribute("positions", positionsDto);
+        request.setAttribute("departments", departmentsDto);
+
         request.getRequestDispatcher("employees.jsp").forward(request, response);
     }
 }

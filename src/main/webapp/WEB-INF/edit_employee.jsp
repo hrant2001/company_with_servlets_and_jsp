@@ -59,12 +59,12 @@
                         <td>
                             <label>
                                 <input type="number" value="<c:out value='${emp.getPositionId()}' />" name="position"
-                                       required="required" min="1">
+                                       required="required" min="1" max="${positions_number}">
                             </label></td>
                         <td>
                             <label>
                                 <input type="number" value="<c:out value='${emp.getDepartmentId()}' />" name="department"
-                                       required="required" min="1">
+                                       required="required" min="1" max="${departments_number}">
                             </label></td>
                         <td>
                             <button type="submit" class="btn btn-success">Save</button>
