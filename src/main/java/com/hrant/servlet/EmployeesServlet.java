@@ -112,4 +112,12 @@ public class EmployeesServlet extends HttpServlet {
 
         request.getRequestDispatcher("employees.jsp").forward(request, response);
     }
+
+    public static PositionDto findPositionById(int id) {
+        return PositionService.findPositionById(id);
+    }
+
+    public static DepartmentDto findDepartmentById(int id) {
+        return DepartmentService.findDepartmentById(id);
+    }
 }

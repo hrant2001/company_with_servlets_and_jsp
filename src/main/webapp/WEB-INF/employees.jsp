@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.hrant.service.DepartmentService" %>
-<%@ page import="com.hrant.service.PositionService" %>
+<%@ page import="com.hrant.servlet.EmployeesServlet" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,8 +71,8 @@
                 <td>${emp.getFName()}</td>
                 <td>${emp.getLName()}</td>
                 <td>${emp.getBirthday()}</td>
-                <td>${PositionService.findPositionById(emp.getPositionId()).name}</td>
-                <td>${DepartmentService.findDepartmentById(emp.getDepartmentId()).name}</td>
+                <td>${EmployeesServlet.findPositionById(emp.getPositionId()).name}</td>
+                <td>${EmployeesServlet.findDepartmentById(emp.getDepartmentId()).name}</td>
                 <td><a href="edit-emp?id=${emp.getEmployeeId()}">Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp; <a href="delete-emp?id=${emp.getEmployeeId()}">Delete</a></td>
             </tr>
