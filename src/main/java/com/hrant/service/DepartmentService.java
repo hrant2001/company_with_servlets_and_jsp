@@ -1,6 +1,7 @@
 package com.hrant.service;
 
 import com.hrant.dto.DepartmentDto;
+import com.hrant.dto.PositionDto;
 import com.hrant.model.Department;
 import com.hrant.repository.DepartmentRepository;
 import com.hrant.repository.Repository;
@@ -64,5 +65,14 @@ public class DepartmentService {
         }
 
         return departmentsDto;
+    }
+
+    public static int findDepartmentIdByName(String name) {
+        List<DepartmentDto> deps = getDepartments();
+        for (DepartmentDto d : deps) {
+            if (d.getName().equals(name))
+                return d.getDepartmentId();
+        }
+        return -1;
     }
 }

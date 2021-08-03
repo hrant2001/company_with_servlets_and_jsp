@@ -48,12 +48,12 @@ public class EmployeesServlet extends HttpServlet {
 
     private void showAddedRow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<EmployeeDto> employeesDto = EmployeeService.getEmployees();
-        int positionsNumber = PositionService.getPositions().size();
-        int departmentsNumber = DepartmentService.getDepartments().size();
+        List<PositionDto> positionsDto = PositionService.getPositions();
+        List<DepartmentDto> departmentsDto = DepartmentService.getDepartments();
 
         request.setAttribute("employees", employeesDto);
-        request.setAttribute("positions_number", positionsNumber);
-        request.setAttribute("departments_number", departmentsNumber);
+        request.setAttribute("positions", positionsDto);
+        request.setAttribute("departments", departmentsDto);
         request.getRequestDispatcher("add_employee.jsp").forward(request, response);
     }
 
@@ -61,16 +61,19 @@ public class EmployeesServlet extends HttpServlet {
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
         LocalDate birthday = LocalDate.parse(request.getParameter("birthday"));
-        int position = Integer.parseInt(request.getParameter("position"));
-        int department = Integer.parseInt(request.getParameter("department"));
+        String position = request.getParameter("position");
+        String department = request.getParameter("department");
 
-        EmployeeService.addEmployee(new EmployeeDto(fname, lname, birthday, position, department));
+        EmployeeService.addEmployee(new EmployeeDto(fname, lname, birthday,
+                PositionService.findPositionIdByName(position), DepartmentService.findDepartmentIdByName(department)));
+
         response.sendRedirect("employees");
     }
 
     private void deleteEmployee(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int id = Integer.parseInt(request.getParameter("id"));
         EmployeeService.deleteEmployeeById(id);
+
         response.sendRedirect("employees");
     }
 
@@ -79,13 +82,14 @@ public class EmployeesServlet extends HttpServlet {
 
         EmployeeDto existingEmployee = EmployeeService.findEmployeeById(id);
         List<EmployeeDto> employeesDto = EmployeeService.getEmployees();
-        int positionsNumber = PositionService.getPositions().size();
-        int departmentsNumber = DepartmentService.getDepartments().size();
+        List<PositionDto> positionsDto = PositionService.getPositions();
+        List<DepartmentDto> departmentsDto = DepartmentService.getDepartments();
 
-        request.setAttribute("employees", employeesDto);
         request.setAttribute("employee", existingEmployee);
-        request.setAttribute("positions_number", positionsNumber);
-        request.setAttribute("departments_number", departmentsNumber);
+        request.setAttribute("employees", employeesDto);
+        request.setAttribute("positions", positionsDto);
+        request.setAttribute("departments", departmentsDto);
+
         request.getRequestDispatcher("edit_employee.jsp").forward(request, response);
     }
 
@@ -94,10 +98,12 @@ public class EmployeesServlet extends HttpServlet {
         String fname = request.getParameter("fname");
         String lname = request.getParameter("lname");
         LocalDate birthday = LocalDate.parse(request.getParameter("birthday"));
-        int position = Integer.parseInt(request.getParameter("position"));
-        int department = Integer.parseInt(request.getParameter("department"));
+        String position = request.getParameter("position");
+        String department = request.getParameter("department");
 
-        EmployeeService.updateEmployee(id, new EmployeeDto(fname, lname, birthday, position, department));
+        EmployeeService.updateEmployee(id, new EmployeeDto(fname, lname, birthday,
+                PositionService.findPositionIdByName(position), DepartmentService.findDepartmentIdByName(department)));
+
         response.sendRedirect("employees");
     }
 
@@ -119,5 +125,13 @@ public class EmployeesServlet extends HttpServlet {
 
     public static DepartmentDto findDepartmentById(int id) {
         return DepartmentService.findDepartmentById(id);
+    }
+
+    public static List<PositionDto> findPositions() {
+        return PositionService.getPositions();
+    }
+
+    public static List<DepartmentDto> findDepartments() {
+        return DepartmentService.getDepartments();
     }
 }

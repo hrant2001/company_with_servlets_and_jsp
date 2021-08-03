@@ -1,5 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+<%@ page import="com.hrant.servlet.EmployeesServlet" %>
+<%@ page import="com.hrant.dto.PositionDto" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.hrant.dto.DepartmentDto" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +12,51 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+          rel = "stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
+    <script>
+        $(function () {
+            $(function () {
+
+                var positions = [];
+                <%List<PositionDto> pos = (ArrayList<PositionDto>) request.getAttribute("positions");
+            for (int i = 0; i < pos.size(); i++) {
+            %>
+
+                positions[<%=i%>] = '<%=pos.get(i).getName()%>';
+                <%
+                     }
+                 %>
+
+                $("#pos_autocomplete").autocomplete({
+                    source: positions
+                });
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+
+            var departments = [];
+            <%List<DepartmentDto> deps = (ArrayList<DepartmentDto>) request.getAttribute("departments");
+        for (int i = 0; i < deps.size(); i++) {
+        %>
+
+            departments[<%=i%>] = '<%=deps.get(i).getName()%>';
+            <%
+                 }
+             %>
+
+            $("#dep_autocomplete").autocomplete({
+                source: departments
+            });
+        });
+    </script>
 </head>
 <body>
 <form action="update-emp?id=${employee.getEmployeeId()}" method="post">
@@ -29,8 +76,8 @@
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Birthday</th>
-                <th>Position Id</th>
-                <th>Department Id</th>
+                <th>Position</th>
+                <th>Department</th>
                 <th>Action</th>
 
             </tr>
@@ -58,13 +105,17 @@
                             </label></td>
                         <td>
                             <label>
-                                <input type="number" value="<c:out value='${emp.getPositionId()}' />" name="position"
-                                       required="required" min="1" max="${positions_number}">
+                                <input id="pos_autocomplete"
+                                       value="<c:out value='${EmployeesServlet.findPositionById(emp.getPositionId()).name}' />"
+                                       name="position"
+                                       required="required">
                             </label></td>
                         <td>
                             <label>
-                                <input type="number" value="<c:out value='${emp.getDepartmentId()}' />" name="department"
-                                       required="required" min="1" max="${departments_number}">
+                                <input id="dep_autocomplete"
+                                       value="<c:out value='${EmployeesServlet.findDepartmentById((emp.getDepartmentId())).name}' />"
+                                       name="department"
+                                       required="required">
                             </label></td>
                         <td>
                             <button type="submit" class="btn btn-success">Save</button>
@@ -74,8 +125,8 @@
                         <td>${emp.getFName()}</td>
                         <td>${emp.getLName()}</td>
                         <td>${emp.getBirthday()}</td>
-                        <td>${emp.getPositionId()}</td>
-                        <td>${emp.getDepartmentId()}</td>
+                        <td>${EmployeesServlet.findPositionById(emp.getPositionId()).name}</td>
+                        <td>${EmployeesServlet.findDepartmentById((emp.getDepartmentId())).name}</td>
                     </c:if>
                 </tr>
             </c:forEach>

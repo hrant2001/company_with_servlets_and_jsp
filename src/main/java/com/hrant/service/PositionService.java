@@ -67,4 +67,13 @@ public class PositionService {
 
         return positionsDto;
     }
+
+    public static int findPositionIdByName(String name) {
+        List<PositionDto> pos = getPositions();
+        for (PositionDto p : pos) {
+            if (p.getName().equals(name))
+                return p.getPositionId();
+        }
+        return -1;
+    }
 }

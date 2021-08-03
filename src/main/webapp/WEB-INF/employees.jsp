@@ -1,6 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ page import="com.hrant.servlet.EmployeesServlet" %>
+<%@ page import="com.hrant.dto.PositionDto" %>
+<%@ page import="java.util.List" %>
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.hrant.dto.DepartmentDto" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,8 +12,50 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+
+    <script>
+        $(function () {
+            $(function () {
+
+                var positions = [];
+                <%List<PositionDto> pos = (ArrayList<PositionDto>) request.getAttribute("positions");
+            for (int i = 0; i < pos.size(); i++) {
+            %>
+
+                positions[<%=i%>] = '<%=pos.get(i).getName()%>';
+                <%
+                     }
+                 %>
+
+                $("#position").autocomplete({
+                    source: positions
+                });
+            });
+        });
+    </script>
+    <script>
+        $(function () {
+
+            var departments = [];
+            <%List<DepartmentDto> deps = (ArrayList<DepartmentDto>) request.getAttribute("departments");
+        for (int i = 0; i < deps.size(); i++) {
+        %>
+
+            departments[<%=i%>] = '<%=deps.get(i).getName()%>';
+            <%
+                 }
+             %>
+
+            $("#department").autocomplete({
+                source: departments
+            });
+        });
+    </script>
 </head>
 <body>
 
@@ -23,10 +69,6 @@
 </div>
 
 <div class="container">
-    <%--    <p>Search the table for first names, last names, birthdays, positions or--%>
-    <%--        departments:</p>--%>
-    <%--    <input class="form-control" id="myInput" type="text" placeholder="Search..">--%>
-    <%--    <br>--%>
     <div style="float: left; margin-right: 20px">
         <p>Search for the employee first name</p>
         <input class="form-control" id="fname" type="text" onkeyup="filter(id, 1)" placeholder="First Name...">
@@ -104,17 +146,5 @@
         }
     }
 </script>
-
-
-<%--<script>--%>
-<%--    $(document).ready(function () {--%>
-<%--        $("#myInput").on("keyup", function () {--%>
-<%--            var value = $(this).val().toLowerCase();--%>
-<%--            $("#myTable tr").filter(function () {--%>
-<%--                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)--%>
-<%--            });--%>
-<%--        });--%>
-<%--    });--%>
-<%--</script>--%>
 </body>
 </html>
