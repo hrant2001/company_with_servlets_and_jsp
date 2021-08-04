@@ -87,7 +87,7 @@ public class EmployeesServlet extends HttpServlet {
         String position = request.getParameter("position");
         String department = request.getParameter("department");
 
-        List<EmployeeDto> employeesDto = EmployeeService.getEmployeesByEverything(fname, lname, birthday,
+        List<EmployeeDto> employeesDto = EmployeeService.getEmployeesByCriteria(fname, lname, birthday,
                 PositionService.findPositionIdByName(position), DepartmentService.findDepartmentIdByName(department));
         List<PositionDto> positionsDto = PositionService.getPositions();
         List<DepartmentDto> departmentsDto = DepartmentService.getDepartments();

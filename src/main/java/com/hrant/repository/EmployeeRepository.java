@@ -128,7 +128,7 @@ public class EmployeeRepository implements Repository<Employee> {
         }
     }
 
-    public static List<Employee> getEverything(DataSource dataSource, String fname, String lname, String birthday, String positionId, String departmentId) throws SQLException {
+    public static List<Employee> getByCriteria(DataSource dataSource, String fname, String lname, String birthday, String positionId, String departmentId) throws SQLException {
         String sql = "select * from employee where fname like concat('%',?,'%') and lname like concat('%',?,'%') and birthday like concat('%',?,'%') and position_id like concat('%',?,'%') and department_id like concat('%',?,'%')";
 
         try (Connection connection = dataSource.getConnection();

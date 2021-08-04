@@ -12,7 +12,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
-import java.time.LocalDate;
 import java.util.*;
 
 public class EmployeeService {
@@ -176,7 +175,7 @@ public class EmployeeService {
         return employeesDto;
     }
 
-    public static List<EmployeeDto> getEmployeesByEverything(String fname, String lname, String birthday, int positionId, int departmentId) {
+    public static List<EmployeeDto> getEmployeesByCriteria(String fname, String lname, String birthday, int positionId, int departmentId) {
         List<Employee> employees = null;
         String newPositionId = String.valueOf(positionId);
         String newDepartmentId = String.valueOf(departmentId);
@@ -186,7 +185,7 @@ public class EmployeeService {
             newDepartmentId = "";
 
         try {
-            employees = EmployeeRepository.getEverything(dataSource, fname, lname, birthday, newPositionId, newDepartmentId);
+            employees = EmployeeRepository.getByCriteria(dataSource, fname, lname, birthday, newPositionId, newDepartmentId);
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
