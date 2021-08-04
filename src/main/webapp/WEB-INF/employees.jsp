@@ -12,11 +12,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+    <link href="https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
-    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
     <script>
         $(function () {
@@ -32,7 +32,7 @@
                      }
                  %>
 
-                $("#position").autocomplete({
+                $("#pos_autocomplete").autocomplete({
                     source: positions
                 });
             });
@@ -51,7 +51,7 @@
                  }
              %>
 
-            $("#department").autocomplete({
+            $("#dep-autocomplete").autocomplete({
                 source: departments
             });
         });
@@ -69,31 +69,40 @@
 </div>
 
 <div class="container">
-    <div style="float: left; margin-right: 20px">
-        <p>Search for the employee first name</p>
-        <input class="form-control" id="fname" type="text" onkeyup="filter(id, 1)" placeholder="First Name...">
-        &nbsp;
-    </div>
+    <form action="search-emp" method="post">
+        <div style="float: left; margin-right: 20px">
+            <p>Search for the employee first name</p>
+            <input class="form-control" name="fname" type="text" placeholder="First Name...">
+            &nbsp;
+        </div>
 
-    <div style="float: left; margin-right: 20px">
-        <p>Search for the employee last name</p>
-        <input class="form-control" id="lname" type="text" onkeyup="filter(id, 2)" placeholder="Last Name...">
-    </div>
+        <div style="float: left; margin-right: 20px">
+            <p>Search for the employee last name</p>
+            <input class="form-control" name="lname" type="text" placeholder="Last Name...">
+            &nbsp;
+        </div>
 
-    <div style="float: left; margin-right: 20px">
-        <p>Search for the employee birthday</p>
-        <input class="form-control" id="birthday" type="text" onkeyup="filter(id, 3)" placeholder="Birthday...">
-    </div>
+        <div style="float: left; margin-right: 20px">
+            <p>Search for the employee birthday</p>
+            <input class="form-control" name="birthday" type="text" placeholder="Birthday...">
+            &nbsp;
+        </div>
 
-    <div style="float: left; margin-right: 20px">
-        <p>Search for the position</p>
-        <input class="form-control" id="position" type="text" onkeyup="filter(id, 4)" placeholder="Position...">
-    </div>
+        <div style="float: left; margin-right: 20px">
+            <p>Search for the position</p>
+            <input class="form-control" id="pos_autocomplete" name="position" type="text" placeholder="Position...">
+            &nbsp;
+        </div>
 
-    <div style="float: left">
-        <p>Search for the department</p>
-        <input class="form-control" id="department" type="text" onkeyup="filter(id, 5)" placeholder="Department...">
-    </div>
+        <div style="float: left">
+            <p>Search for the department</p>
+            <input class="form-control" id="dep-autocomplete" name="department" type="text" placeholder="Department...">
+            &nbsp;
+        </div>
+        <div style="float: left">
+            <button type="submit" class="btn btn-success">Search</button>
+        </div>
+    </form>
     <table class="table table-bordered table-striped" id="myTable">
         <thead>
         <tr>
@@ -125,26 +134,27 @@
     <a href="<%=request.getContextPath()%>/new-emp" class="btn btn-success">Add employee</a>
 </div>
 
-<script>
-    function filter(inputId, index) {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById(inputId);
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
+<%--onkeyup="filter(id, 3)"--%>
+<%--<script>--%>
+<%--    function filter(inputId, index) {--%>
+<%--        var input, filter, table, tr, td, i, txtValue;--%>
+<%--        input = document.getElementById(inputId);--%>
+<%--        filter = input.value.toUpperCase();--%>
+<%--        table = document.getElementById("myTable");--%>
+<%--        tr = table.getElementsByTagName("tr");--%>
 
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[index];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
+<%--        for (i = 0; i < tr.length; i++) {--%>
+<%--            td = tr[i].getElementsByTagName("td")[index];--%>
+<%--            if (td) {--%>
+<%--                txtValue = td.textContent || td.innerText;--%>
+<%--                if (txtValue.toUpperCase().indexOf(filter) > -1) {--%>
+<%--                    tr[i].style.display = "";--%>
+<%--                } else {--%>
+<%--                    tr[i].style.display = "none";--%>
+<%--                }--%>
+<%--            }--%>
+<%--        }--%>
+<%--    }--%>
+<%--</script>--%>
 </body>
 </html>

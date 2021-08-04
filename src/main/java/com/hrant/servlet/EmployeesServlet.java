@@ -35,6 +35,9 @@ public class EmployeesServlet extends HttpServlet {
             case "/delete-emp":
                 deleteEmployee(request, response);
                 break;
+            case "/search-emp":
+                searchEmployees(request, response);
+                break;
             default:
                 listEmployees(request, response);
                 break;
@@ -75,6 +78,25 @@ public class EmployeesServlet extends HttpServlet {
         EmployeeService.deleteEmployeeById(id);
 
         response.sendRedirect("employees");
+    }
+
+    private void searchEmployees(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String fname = request.getParameter("fname");
+        String lname = request.getParameter("lname");
+        String birthday = request.getParameter("birthday");
+        String position = request.getParameter("position");
+        String department = request.getParameter("department");
+
+        List<EmployeeDto> employeesDto = EmployeeService.getEmployeesByEverything(fname, lname, birthday,
+                PositionService.findPositionIdByName(position), DepartmentService.findDepartmentIdByName(department));
+        List<PositionDto> positionsDto = PositionService.getPositions();
+        List<DepartmentDto> departmentsDto = DepartmentService.getDepartments();
+
+        request.setAttribute("employees", employeesDto);
+        request.setAttribute("positions", positionsDto);
+        request.setAttribute("departments", departmentsDto);
+        request.getRequestDispatcher("employees.jsp").forward(request, response);
+
     }
 
     private void showEditingRow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -1,6 +1,5 @@
 package com.hrant.repository;
 
-import com.hrant.dto.DepartmentDto;
 import com.hrant.model.Department;
 import com.hrant.util.ResultSetConverter;
 

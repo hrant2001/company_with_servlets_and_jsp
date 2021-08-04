@@ -88,33 +88,28 @@
                     <c:if test="${emp.getEmployeeId() == employee.getEmployeeId()}">
                         <td>
                             <label>
-                                <input type="text" value="<c:out value='${emp.getFName()}' />" name="fname"
-                                       required="required">
+                                <input type="text" value="${emp.getFName()}" name="fname" required="required">
                             </label>
                         </td>
                         <td>
                             <label>
-                                <input type="text" value="<c:out value='${emp.getLName()}' />" name="lname"
-                                       required="required">
+                                <input type="text" value="${emp.getLName()}" name="lname" required="required">
                             </label>
                         </td>
                         <td>
                             <label>
-                                <input type="date" value="<c:out value='${emp.getBirthday()}' />" name="birthday"
-                                       required="required">
+                                <input type="date" value="${emp.getBirthday()}" name="birthday" required="required">
                             </label></td>
                         <td>
                             <label>
                                 <input id="pos_autocomplete"
-                                       value="<c:out value='${EmployeesServlet.findPositionById(emp.getPositionId()).name}' />"
-                                       name="position"
+                                       value="${EmployeesServlet.findPositionById(emp.getPositionId()).name}" name="position"
                                        required="required">
                             </label></td>
                         <td>
                             <label>
                                 <input id="dep_autocomplete"
-                                       value="<c:out value='${EmployeesServlet.findDepartmentById((emp.getDepartmentId())).name}' />"
-                                       name="department"
+                                       value="${EmployeesServlet.findDepartmentById((emp.getDepartmentId())).name}" name="department"
                                        required="required">
                             </label></td>
                         <td>

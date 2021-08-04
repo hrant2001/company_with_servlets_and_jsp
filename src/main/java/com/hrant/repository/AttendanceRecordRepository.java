@@ -1,6 +1,5 @@
 package com.hrant.repository;
 
-import com.hrant.dto.AttendanceRecordDto;
 import com.hrant.model.AttendanceRecord;
 import com.hrant.util.ResultSetConverter;
 

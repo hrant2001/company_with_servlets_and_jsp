@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.*;
 
 public class EmployeeService {
@@ -165,6 +166,33 @@ public class EmployeeService {
         if (employees == null || employees.isEmpty()) {
             System.out.println("\n" + resourceBundle.getString("empty.list") + "\n");
             LOGGER.warn("The list of employees is empty");
+            return new ArrayList<>();
+        }
+        List<EmployeeDto> employeesDto = new ArrayList<>();
+        for (Employee e : employees) {
+            employeesDto.add(DtoConverter.employeeToDto(e));
+        }
+
+        return employeesDto;
+    }
+
+    public static List<EmployeeDto> getEmployeesByEverything(String fname, String lname, String birthday, int positionId, int departmentId) {
+        List<Employee> employees = null;
+        String newPositionId = String.valueOf(positionId);
+        String newDepartmentId = String.valueOf(departmentId);
+        if (positionId == -1)
+            newPositionId = "";
+        if (departmentId == -1)
+            newDepartmentId = "";
+
+        try {
+            employees = EmployeeRepository.getEverything(dataSource, fname, lname, birthday, newPositionId, newDepartmentId);
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+        if (employees == null || employees.isEmpty()) {
+            System.out.println("\n Searching" + resourceBundle.getString("empty.list") + "\n");
+            LOGGER.warn("The searched list of employees is empty");
             return new ArrayList<>();
         }
         List<EmployeeDto> employeesDto = new ArrayList<>();

@@ -7,6 +7,7 @@ import com.hrant.util.ResultSetConverter;
 import javax.sql.DataSource;
 import java.sql.*;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.*;
 
 public class EmployeeRepository implements Repository<Employee> {
@@ -123,6 +124,29 @@ public class EmployeeRepository implements Repository<Employee> {
             while (resultSet.next()) {
                 employees.add(ResultSetConverter.resultSetToEmployee(resultSet));
             }
+            return employees;
+        }
+    }
+
+    public static List<Employee> getEverything(DataSource dataSource, String fname, String lname, String birthday, String positionId, String departmentId) throws SQLException {
+        String sql = "select * from employee where fname like concat('%',?,'%') and lname like concat('%',?,'%') and birthday like concat('%',?,'%') and position_id like concat('%',?,'%') and department_id like concat('%',?,'%')";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, fname);
+            preparedStatement.setString(2, lname);
+            preparedStatement.setString(3, birthday);
+            preparedStatement.setString(4, positionId);
+            preparedStatement.setString(5, departmentId);
+
+            employees.clear();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                employees.add(ResultSetConverter.resultSetToEmployee(resultSet));
+            }
+
             return employees;
         }
     }

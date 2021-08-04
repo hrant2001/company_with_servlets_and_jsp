@@ -96,30 +96,25 @@
 
                 <td>
                     <label>
-                        <input type="text" value="<c:out value='${e.fname}' />" name="fname"
-                               required="required">
+                        <input type="text" name="fname" required="required">
                     </label>
                 </td>
                 <td>
                     <label>
-                        <input type="text" value="<c:out value='${e.lname}' />" name="lname"
-                               required="required">
+                        <input type="text" name="lname" required="required">
                     </label>
                 </td>
                 <td>
                     <label>
-                        <input type="date" value="<c:out value='${e.birthday}' />" name="birthday"
-                               required="required">
+                        <input type="date" name="birthday" required="required">
                     </label></td>
                 <td>
                     <label>
-                        <input id="pos_autocomplete" value="<c:out value='${e.position}' />" name="position"
-                               required="required">
+                        <input id="pos_autocomplete" name="position" required="required">
                     </label></td>
                 <td>
                     <label>
-                        <input id="dep_autocomplete" value="<c:out value='${e.department}' />" name="department"
-                               required="required">
+                        <input id="dep_autocomplete" name="department" required="required">
                     </label></td>
                 <td>
                     <button type="submit" class="btn btn-success">Save</button>
