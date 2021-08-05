@@ -13,8 +13,6 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class PositionService {
     private static Repository<Position> positionRepository = new PositionRepository();
@@ -24,11 +22,6 @@ public class PositionService {
     static {
         dataSource = DataSourceFactory.getInstance();
     }
-
-    /**
-     * The resource bundle
-     */
-    private static ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", new Locale("en"));
 
     private final static Logger LOGGER = LoggerFactory.getLogger(PositionService.class);
 
@@ -41,8 +34,7 @@ public class PositionService {
         }
         if (position == null) {
             LOGGER.warn("The position with the id of " + id + " was not found in the list");
-            System.out.println(resourceBundle.getString("emp") + " " + resourceBundle.getString("not.found") + " " + id + " "
-                    + resourceBundle.getString("not.in.list"));
+            System.out.println("The position with the id of " + id + " was not found in the list");
         }
 
         return DtoConverter.positionToDto(position);
@@ -52,12 +44,15 @@ public class PositionService {
         List<Position> positions = null;
         try {
             positions = positionRepository.getAll(dataSource);
+            LOGGER.warn("The list of positions was successfully found");
+            System.out.println("The list of positions was successfully found");
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
         if (positions == null || positions.isEmpty()) {
-            System.out.println("\n" + resourceBundle.getString("empty.list") + "\n");
             LOGGER.warn("The list of employees is empty");
+            System.out.println("\nThe list of employees is empty\n");
+
             return new ArrayList<>();
         }
         List<PositionDto> positionsDto = new ArrayList<>();
@@ -74,6 +69,8 @@ public class PositionService {
             if (p.getName().equals(name))
                 return p.getPositionId();
         }
+        LOGGER.warn("The position id with the name of " + name + " was not found in the list");
+        System.out.println("The position id with the name of " + name + " was not found in the list");
         return -1;
     }
 }

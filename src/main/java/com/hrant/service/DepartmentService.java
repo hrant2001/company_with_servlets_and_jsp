@@ -1,7 +1,6 @@
 package com.hrant.service;
 
 import com.hrant.dto.DepartmentDto;
-import com.hrant.dto.PositionDto;
 import com.hrant.model.Department;
 import com.hrant.repository.DepartmentRepository;
 import com.hrant.repository.Repository;
@@ -14,8 +13,6 @@ import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
 
 public class DepartmentService {
 
@@ -26,8 +23,6 @@ public class DepartmentService {
     static {
         dataSource = DataSourceFactory.getInstance();
     }
-
-    private static ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", new Locale("en"));
 
     private final static Logger LOGGER = LoggerFactory.getLogger(DepartmentService.class);
 
@@ -40,8 +35,7 @@ public class DepartmentService {
         }
         if (department == null) {
             LOGGER.warn("The department with the id of " + id + " was not found in the list");
-            System.out.println(resourceBundle.getString("emp") + " " + resourceBundle.getString("not.found") + " " + id + " "
-                    + resourceBundle.getString("not.in.list"));
+            System.out.println("The department with the id of " + id + " was not found in the list");
         }
 
         return DtoConverter.departmentToDto(department);
@@ -55,8 +49,8 @@ public class DepartmentService {
             LOGGER.error(e.getMessage());
         }
         if (departments == null || departments.isEmpty()) {
-            System.out.println("\n" + resourceBundle.getString("empty.list") + "\n");
-            LOGGER.warn("The list of employees is empty");
+            System.out.println("\nThe list of departments is empty\n");
+            LOGGER.warn("The list of departments is empty");
             return new ArrayList<>();
         }
         List<DepartmentDto> departmentsDto = new ArrayList<>();
@@ -73,6 +67,8 @@ public class DepartmentService {
             if (d.getName().equals(name))
                 return d.getDepartmentId();
         }
+        LOGGER.warn("The department id with the name of " + name + " was not found in the list");
+        System.out.println("The department id with the name of " + name + " was not found in the list");
         return -1;
     }
 }

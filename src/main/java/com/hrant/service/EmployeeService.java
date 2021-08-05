@@ -24,11 +24,6 @@ public class EmployeeService {
         dataSource = DataSourceFactory.getInstance();
     }
 
-    /**
-     * The resource bundle
-     */
-    private static ResourceBundle resourceBundle = ResourceBundle.getBundle("messages", new Locale("en"));
-
     private final static Logger LOGGER = LoggerFactory.getLogger(EmployeeService.class);
 
     /**
@@ -40,12 +35,10 @@ public class EmployeeService {
         try {
             if (employeeRepository.insert(dataSource, DtoConverter.dtoToEmployee(employeeDto)) == 1) {
                 LOGGER.warn("The employee " + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " is already in the list");
-                System.out.println("\n" + resourceBundle.getString("emp") + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " " + resourceBundle.getString("in-list") + "\n");
+                System.out.println("\nThe employee " + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " is already in the list\n");
             } else {
-                LOGGER.info("The employee " + employeeDto.getFName() + " "
-                        + employeeDto.getLName() + " " + employeeDto.getBirthday() + " was successfully added to the list of employees");
-                System.out.println("\n" + resourceBundle.getString("emp") + " " + employeeDto.getFName() + " "
-                        + employeeDto.getLName() + " " + employeeDto.getBirthday() + " " + resourceBundle.getString("success.add") + "\n");
+                LOGGER.info("The employee " + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " was successfully added to the list of employees");
+                System.out.println("\nThe employee " + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " was successfully added to the list of employees\n");
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -60,13 +53,11 @@ public class EmployeeService {
     public static void deleteEmployee(EmployeeDto employeeDto) {
         try {
             if (employeeRepository.delete(dataSource, DtoConverter.dtoToEmployee(employeeDto)) == 0) {
-                LOGGER.info("The employee " + employeeDto.getFName() + " " + employeeDto.getLName() +
-                        " " + employeeDto.getBirthday() + " was successfully deleted from the list of employees");
-                System.out.println("\n" + resourceBundle.getString("emp") + " " + employeeDto.getFName() + " " + employeeDto.getLName() +
-                        " " + employeeDto.getBirthday() + " " + resourceBundle.getString("success.delete") + "\n");
+                LOGGER.info("The employee " + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " was successfully deleted from the list of employees");
+                System.out.println("\nThe employee " + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " was successfully deleted from the list of employees\n");
             } else {
                 LOGGER.warn("The employee " + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " was not found in the list of employees");
-                System.out.println("\n" + resourceBundle.getString("emp") + " " + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " " + resourceBundle.getString("not.in.list") + "\n");
+                System.out.println("\nThe employee " + employeeDto.getFName() + " " + employeeDto.getLName() + " " + employeeDto.getBirthday() + " was not found in the list of employees\n");
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -77,10 +68,10 @@ public class EmployeeService {
         try {
             if (employeeRepository.deleteById(dataSource, id) == 0) {
                 LOGGER.info("The employee with the id " + id + " was successfully deleted from the list of employees");
-                System.out.println("\n" + resourceBundle.getString("emp") + " with the id " + id + " " + resourceBundle.getString("success.delete") + "\n");
+                System.out.println("\nThe employee with the id " + id + " was successfully deleted from the list of employees\n");
             } else {
                 LOGGER.warn("The employee with the id " + id + " was not found in the list of employees");
-                System.out.println("\n" + resourceBundle.getString("emp") + " with the id" + id + " " + resourceBundle.getString("not.in.list") + "\n");
+                System.out.println("\nThe employee with the id " + id + " was not found in the list of employees\n");
             }
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
@@ -90,6 +81,8 @@ public class EmployeeService {
     public static void updateEmployee(int id, EmployeeDto employeeDto) {
         try {
             employeeRepository.update(id, dataSource, DtoConverter.dtoToEmployee(employeeDto));
+            LOGGER.info("The employee with the id " + id + " was successfully updated from the list of employees");
+            System.out.println("\nThe employee with the id " + id + " was successfully updated from the list of employees\n");
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
@@ -109,8 +102,7 @@ public class EmployeeService {
         }
         if (employees.isEmpty()) {
             LOGGER.warn("The employee with the last name of " + lastName + " was not found in the list");
-            System.out.println(resourceBundle.getString("emp") + " " + resourceBundle.getString("not.found") + " " + lastName + " "
-                    + resourceBundle.getString("not.in.list"));
+            System.out.println("The employee with the last name of " + lastName + " was not found in the list");
             return;
         }
         employees.forEach(System.out::println);
@@ -120,14 +112,15 @@ public class EmployeeService {
         Employee employee;
         try {
             employee = employeeRepository.findById(dataSource, id);
+            LOGGER.warn("The employee with the id of " + id + " was successfully found in the list");
+            System.out.println("The employee with the id of " + id + " was successfully found in the list");
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
             return null;
         }
         if (employee == null) {
             LOGGER.warn("The employee with the id of " + id + " was not found in the list");
-            System.out.println(resourceBundle.getString("emp") + " " + resourceBundle.getString("not.found") + " " + id + " "
-                    + resourceBundle.getString("not.in.list"));
+            System.out.println("The employee with the id of " + id + " was not found in the list");
         }
 
         return DtoConverter.employeeToDto(employee);
@@ -144,8 +137,8 @@ public class EmployeeService {
             LOGGER.error(e.getMessage());
         }
         if (employees.isEmpty()) {
-            System.out.println("\n" + resourceBundle.getString("empty.list") + "\n");
             LOGGER.warn("The list of employees is empty");
+            System.out.println("\nThe list of employees is empty\n");
             return;
         }
         System.out.println();
@@ -159,12 +152,14 @@ public class EmployeeService {
         List<Employee> employees = null;
         try {
             employees = employeeRepository.getAll(dataSource);
+            LOGGER.warn("The list of employees was successfully found");
+            System.out.println("The list of employees was successfully found");
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
         if (employees == null || employees.isEmpty()) {
-            System.out.println("\n" + resourceBundle.getString("empty.list") + "\n");
             LOGGER.warn("The list of employees is empty");
+            System.out.println("\nThe list of employees is empty\n");
             return new ArrayList<>();
         }
         List<EmployeeDto> employeesDto = new ArrayList<>();
@@ -186,12 +181,14 @@ public class EmployeeService {
 
         try {
             employees = EmployeeRepository.getByCriteria(dataSource, fname, lname, birthday, newPositionId, newDepartmentId);
+            LOGGER.warn("The list of employees with specific criteria was successfully found");
+            System.out.println("The list of employees with specific criteria was successfully found");
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
         if (employees == null || employees.isEmpty()) {
-            System.out.println("\n Searching " + resourceBundle.getString("empty.list") + "\n");
             LOGGER.warn("The searched list of employees is empty");
+            System.out.println("\nThe searched list of employees is empty\n");
             return new ArrayList<>();
         }
         List<EmployeeDto> employeesDto = new ArrayList<>();

@@ -1,13 +1,11 @@
 package com.hrant.repository;
 
-import com.hrant.dto.EmployeeDto;
 import com.hrant.model.Employee;
 import com.hrant.util.ResultSetConverter;
 
 import javax.sql.DataSource;
 import java.sql.*;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.*;
 
 public class EmployeeRepository implements Repository<Employee> {
