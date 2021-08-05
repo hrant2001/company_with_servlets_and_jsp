@@ -44,10 +44,10 @@ public final class ResultSetConverter {
     public static AttendanceRecord resultSetToRecord(ResultSet resultSet) throws SQLException {
         AttendanceRecord record = new AttendanceRecord();
 
-        record.setRecordId((resultSet.getInt("record_id")));
+        record.setRecordId(resultSet.getInt("record_id"));
         record.setEntranceTime(resultSet.getTimestamp("entrance_time").toLocalDateTime());
         record.setExitTime(resultSet.getTimestamp("exit_time").toLocalDateTime());
-        record.setEmployeeId((resultSet.getInt("employee_id")));
+        record.setEmployeeId(resultSet.getInt("employee_id"));
 
         return record;
     }

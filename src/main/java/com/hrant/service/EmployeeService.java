@@ -190,7 +190,7 @@ public class EmployeeService {
             LOGGER.error(e.getMessage());
         }
         if (employees == null || employees.isEmpty()) {
-            System.out.println("\n Searching" + resourceBundle.getString("empty.list") + "\n");
+            System.out.println("\n Searching " + resourceBundle.getString("empty.list") + "\n");
             LOGGER.warn("The searched list of employees is empty");
             return new ArrayList<>();
         }

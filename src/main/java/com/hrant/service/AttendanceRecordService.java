@@ -67,4 +67,24 @@ public class AttendanceRecordService {
 
         return recordDto;
     }
+
+    public static List<AttendanceRecordDto> getRecordsByCriteria(String record_date, String full_name) {
+        List<AttendanceRecord> records = null;
+        try {
+            records = AttendanceRecordRepository.getByCriteria(dataSource, record_date, full_name);
+        } catch (SQLException e) {
+            LOGGER.error(e.getMessage());
+        }
+        if (records == null || records.isEmpty()) {
+            System.out.println("\n Searching " + resourceBundle.getString("empty.list") + "\n");
+            LOGGER.warn("The searching list of records is empty");
+            return new ArrayList<>();
+        }
+        List<AttendanceRecordDto> recordDto = new ArrayList<>();
+        for (AttendanceRecord r : records) {
+            recordDto.add(DtoConverter.attendanceRecordToDto(r));
+        }
+
+        return recordDto;
+    }
 }

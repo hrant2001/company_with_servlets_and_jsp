@@ -58,4 +58,25 @@ public class AttendanceRecordRepository implements Repository<AttendanceRecord> 
     public int update(int id, DataSource dataSource, AttendanceRecord attendanceRecord) throws SQLException {
         return 0;
     }
+
+    public static List<AttendanceRecord> getByCriteria(DataSource dataSource, String record_date, String full_name) throws SQLException {
+        String sql = "select attendance_record.record_id,attendance_record.entrance_time,attendance_record.exit_time,employee.employee_id " +
+                "from attendance_record inner join employee on attendance_record.employee_id=employee.employee_id " +
+                "where entrance_time like concat('%',?,'%') and concat(employee.fname,' ',employee.lname) like concat('%',?,'%')";
+
+        try (Connection connection = dataSource.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+            preparedStatement.setString(1, record_date);
+            preparedStatement.setString(2, full_name);
+
+            records.clear();
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            while (resultSet.next()) {
+                records.add(ResultSetConverter.resultSetToRecord(resultSet));
+            }
+            return records;
+        }
+    }
 }

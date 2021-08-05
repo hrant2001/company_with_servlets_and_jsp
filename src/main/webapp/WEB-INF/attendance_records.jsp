@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.hrant.service.EmployeeService" %>
+<%@ page import="com.hrant.servlet.AttendanceRecordsServlet" %>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -29,16 +29,28 @@
 </div>
 
 <div class="container">
-    <div style="float: left; margin-right: 20px">
-        <p>Search for the entrance date</p>
-        <input id="datepicker" width="270" onkeyup="filter(id, 1)">
-        &nbsp;
-    </div>
+    <form action="attendance-records/search-rec" method="post">
+        <div style="float: left; margin-right: 20px">
+            <p>Search for the entrance date</p>
+            <input id="rec-date"
+                   value="<%=request.getParameter("rec-date")!=null?request.getParameter("rec-date"):""%>"
+                   name="rec-date" width="270">
+        </div>
 
-    <div style="float: left">
-        <p>Search for the employee full name</p>
-        <input class="form-control" id="employee_name" type="search" onkeyup="filter(id, 3)" placeholder="Full Name...">
-    </div>
+        <div style="float: left">
+            <p>Search for the employee full name</p>
+            <input class="form-control" id="employee_name"
+                   value="<%=request.getParameter("employee_name")!=null?request.getParameter("employee_name"):""%>"
+                   name="employee_name" type="search" placeholder="Full Name...">
+        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <div>
+            <button type="submit" class="btn btn-success">Search</button>
+        </div>
+    </form>
 
     <table class="table table-bordered table-striped">
         <thead>
@@ -55,59 +67,18 @@
                 <td>${rec.getRecordId()}</td>
                 <td>${rec.getEntranceTime()}</td>
                 <td>${rec.getExitTime()}</td>
-                <td>${EmployeeService.findEmployeeById(rec.getEmployeeId()).FName} ${EmployeeService.findEmployeeById(rec.getEmployeeId()).LName}</td>
+                <td>${AttendanceRecordsServlet.findEmployeeById(rec.getEmployeeId()).FName} ${AttendanceRecordsServlet.findEmployeeById(rec.getEmployeeId()).LName}</td>
             </tr>
         </c:forEach>
         </tbody>
     </table>
 </div>
 
-<%--<script>--%>
-<%--    $(document).ready(function () {--%>
-<%--        $("#myInput").on("keyup", function () {--%>
-<%--            var value = $(this).val().toLowerCase();--%>
-<%--            $("#myTable tr").filter(function () {--%>
-<%--                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)--%>
-<%--            });--%>
-<%--        });--%>
-<%--    });--%>
-<%--</script>--%>
-
 <script>
-    $('#datepicker').datepicker({
+    $('#rec-date').datepicker({
         uiLibrary: 'bootstrap',
         format: 'yyyy-mm-dd'
     });
 </script>
-
-<script>
-    function filter(inputId, index) {
-        var input, filter, table, tr, td, i, txtValue;
-        input = document.getElementById(inputId);
-        filter = input.value.toUpperCase();
-        table = document.getElementById("myTable");
-        tr = table.getElementsByTagName("tr");
-
-        for (i = 0; i < tr.length; i++) {
-            td = tr[i].getElementsByTagName("td")[index];
-            if (td) {
-                txtValue = td.textContent || td.innerText;
-                if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                    tr[i].style.display = "";
-                } else {
-                    tr[i].style.display = "none";
-                }
-            }
-        }
-    }
-</script>
-<%--<script>--%>
-<%--    $('.basicAutoComplete').autoComplete({--%>
-<%--        resolverSettings: {--%>
-<%--            url: 'testdata/test-list.json'--%>
-<%--        }--%>
-<%--    });--%>
-<%--</script>--%>
-
 </body>
 </html>
