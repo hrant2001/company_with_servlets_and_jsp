@@ -69,11 +69,12 @@
 </div>
 
 <div class="container">
-    <form action="search-emp" method="post">
+    <form action="search-emp" method="get">
         <div style="float: left; margin-right: 20px">
             <p>Search for the employee first name</p>
             <input class="form-control"
-                   value="<%=request.getParameter("fname")!=null?request.getParameter("fname"):""%>" name="fname"
+                   value="<%=request.getParameter("fname")!=null?request.getParameter("fname"):""%>" id="fname"
+                   name="fname"
                    type="text" placeholder="First Name...">
             &nbsp;
         </div>
@@ -81,7 +82,8 @@
         <div style="float: left; margin-right: 20px">
             <p>Search for the employee last name</p>
             <input class="form-control"
-                   value="<%=request.getParameter("lname")!=null?request.getParameter("lname"):""%>" name="lname"
+                   value="<%=request.getParameter("lname")!=null?request.getParameter("lname"):""%>" id="lname"
+                   name="lname"
                    type="text" placeholder="Last Name...">
             &nbsp;
         </div>
@@ -90,7 +92,7 @@
             <p>Search for the employee birthday</p>
             <input class="form-control"
                    value="<%=request.getParameter("birthday")!=null?request.getParameter("birthday"):""%>"
-                   name="birthday" type="text" placeholder="Birthday...">
+                   id="birthday" name="birthday" type="text" placeholder="Birthday...">
             &nbsp;
         </div>
 
@@ -111,6 +113,7 @@
         </div>
         <div style="float: left">
             <button type="submit" class="btn btn-success">Search</button>
+            <button class="btn btn-success" onclick="clearAll()">Reset</button>
         </div>
     </form>
     <table class="table table-bordered table-striped" id="myTable">
@@ -233,6 +236,14 @@
                 }
             }
         }
+    }
+
+    function clearAll() {
+        document.getElementById("fname").value = "";
+        document.getElementById("lname").value = "";
+        document.getElementById("birthday").value = "";
+        document.getElementById("pos_autocomplete").value = "";
+        document.getElementById("dep_autocomplete").value = "";
     }
 </script>
 

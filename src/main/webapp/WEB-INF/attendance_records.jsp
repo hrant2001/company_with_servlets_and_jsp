@@ -29,12 +29,12 @@
 </div>
 
 <div class="container">
-    <form action="search-rec" method="post">
+    <form action="search-rec" method="get">
         <div style="float: left; margin-right: 20px">
             <p>Search for the entrance date</p>
-            <input id="rec-date"
-                   value="<%=request.getParameter("rec-date")!=null?request.getParameter("rec-date"):""%>"
-                   name="rec-date" width="270">
+            <input id="rec_date"
+                   value="<%=request.getParameter("rec_date")!=null?request.getParameter("rec_date"):""%>"
+                   name="rec_date" width="270">
         </div>
 
         <div style="float: left">
@@ -49,6 +49,7 @@
         <br>
         <div>
             <button type="submit" class="btn btn-success">Search</button>
+            <button class="btn btn-success" onclick="clearAll()">Reset</button>
         </div>
     </form>
 
@@ -75,7 +76,7 @@
 </div>
 
 <script>
-    $('#rec-date').datepicker({
+    $('#rec_date').datepicker({
         uiLibrary: 'bootstrap',
         format: 'yyyy-mm-dd'
     });
@@ -169,7 +170,11 @@
             }
         }
     }
-</script>
+
+    function clearAll() {
+        document.getElementById("rec_date").value = "";
+        document.getElementById("employee_name").value = "";
+    }
 </script>
 </body>
 </html>
