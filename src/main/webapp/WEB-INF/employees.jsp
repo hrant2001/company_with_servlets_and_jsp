@@ -71,49 +71,69 @@
 <div class="container">
     <form action="search-emp" method="get">
         <div style="float: left; margin-right: 20px">
-            <p>Search for the employee first name</p>
-            <input class="form-control"
-                   value="<%=request.getParameter("fname")!=null?request.getParameter("fname"):""%>" id="fname"
-                   name="fname"
-                   type="text" placeholder="First Name...">
-            &nbsp;
+            <p>Search by the employee first name</p>
+            <div style="float: left">
+                <input class="form-control"
+                       value="<%=request.getParameter("fname")!=null?request.getParameter("fname"):""%>" id="fname"
+                       name="fname" size="15"
+                       type="text" placeholder="First Name...">
+            </div>
+            <div style="float: left">
+                <button id="clear_fname" style="height: 33px" onclick="clearOneField('fname')">X</button>
+            </div>
         </div>
 
         <div style="float: left; margin-right: 20px">
-            <p>Search for the employee last name</p>
-            <input class="form-control"
-                   value="<%=request.getParameter("lname")!=null?request.getParameter("lname"):""%>" id="lname"
-                   name="lname"
-                   type="text" placeholder="Last Name...">
-            &nbsp;
+            <p>Search by the employee last name</p>
+            <div style="float: left">
+                <input class="form-control"
+                       value="<%=request.getParameter("lname")!=null?request.getParameter("lname"):""%>" id="lname"
+                       name="lname" size="15"
+                       type="text" placeholder="Last Name...">
+            </div>
+            <div style="float: left">
+                <button id="clear_lname" style="height: 33px" onclick="clearOneField('lname')">X</button>
+            </div>
         </div>
 
         <div style="float: left; margin-right: 20px">
-            <p>Search for the employee birthday</p>
-            <input class="form-control"
-                   value="<%=request.getParameter("birthday")!=null?request.getParameter("birthday"):""%>"
-                   id="birthday" name="birthday" type="text" placeholder="Birthday...">
-            &nbsp;
+            <p>Search by the employee birthday</p>
+            <div style="float: left">
+                <input class="form-control" size="18"
+                       value="<%=request.getParameter("birthday")!=null?request.getParameter("birthday"):""%>"
+                       id="birthday" name="birthday" type="text" placeholder="Birthday...">
+            </div>
+            <div style="float: left">
+                <button id="clear_birthday" style="height: 33px" onclick="clearOneField('birthday')">X</button>
+            </div>
         </div>
 
         <div style="float: left; margin-right: 20px">
-            <p>Search for the position</p>
-            <input class="form-control" id="pos_autocomplete"
-                   value="<%=request.getParameter("position")!=null?request.getParameter("position"):""%>"
-                   name="position" type="text" placeholder="Position...">
-            &nbsp;
+            <p>Search by the position</p>
+            <div style="float: left">
+                <input class="form-control" id="pos_autocomplete" size="14"
+                       value="<%=request.getParameter("position")!=null?request.getParameter("position"):""%>"
+                       name="position" type="text" placeholder="Position...">
+            </div>
+            <div style="float: left">
+                <button id="clear_position" style="height: 33px" onclick="clearOneField('pos_autocomplete')">X</button>
+            </div>
         </div>
 
-        <div style="float: left">
-            <p>Search for the department</p>
-            <input class="form-control" id="dep-autocomplete"
-                   value="<%=request.getParameter("department")!=null?request.getParameter("department"):""%>"
-                   name="department" type="text" placeholder="Department...">
-            &nbsp;
+        <div style="float: left; margin-right: 20px">
+            <p>Search by the department</p>
+            <div style="float: left">
+                <input class="form-control" id="dep-autocomplete" size="14"
+                       value="<%=request.getParameter("department")!=null?request.getParameter("department"):""%>"
+                       name="department" type="text" placeholder="Department...">
+            </div>
+            <div style="float: left">
+                <button id="clear_department" style="height: 33px" onclick="clearOneField('dep-autocomplete')">X</button>
+            </div>
         </div>
         <div style="float: left">
             <button type="submit" class="btn btn-success">Search</button>
-            <button class="btn btn-success" onclick="clearAll()">Reset</button>
+            <button class="btn btn-success" onclick="clearAllFields()">Reset</button>
         </div>
     </form>
     <table class="table table-bordered table-striped" id="myTable">
@@ -238,13 +258,18 @@
         }
     }
 
-    function clearAll() {
+    function clearAllFields() {
         document.getElementById("fname").value = "";
         document.getElementById("lname").value = "";
         document.getElementById("birthday").value = "";
         document.getElementById("pos_autocomplete").value = "";
         document.getElementById("dep_autocomplete").value = "";
     }
+
+    function clearOneField(id) {
+        document.getElementById(id).value = "";
+    }
+
 </script>
 
 </body>

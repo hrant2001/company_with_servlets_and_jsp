@@ -32,16 +32,26 @@
     <form action="search-rec" method="get">
         <div style="float: left; margin-right: 20px">
             <p>Search for the entrance date</p>
-            <input id="rec_date"
-                   value="<%=request.getParameter("rec_date")!=null?request.getParameter("rec_date"):""%>"
-                   name="rec_date" width="270">
+            <div style="float: left">
+                <input id="rec_date"
+                       value="<%=request.getParameter("rec_date")!=null?request.getParameter("rec_date"):""%>"
+                       name="rec_date" width="270">
+            </div>
+            <div style="float: left">
+                <button id="clear_rec_date" style="height: 33px" onclick="clearOneField('rec_date')">X</button>
+            </div>
         </div>
 
         <div style="float: left">
             <p>Search for the employee full name</p>
-            <input class="form-control" id="employee_name"
-                   value="<%=request.getParameter("employee_name")!=null?request.getParameter("employee_name"):""%>"
-                   name="employee_name" type="search" placeholder="Full Name...">
+            <div style="float: left">
+                <input class="form-control" id="employee_name"
+                       value="<%=request.getParameter("employee_name")!=null?request.getParameter("employee_name"):""%>"
+                       name="employee_name" type="search" placeholder="Full Name...">
+            </div>
+            <div style="float: left">
+                <button id="clear_employee_name" style="height: 33px" onclick="clearOneField('employee_name')">X</button>
+            </div>
         </div>
         <br>
         <br>
@@ -49,7 +59,7 @@
         <br>
         <div>
             <button type="submit" class="btn btn-success">Search</button>
-            <button class="btn btn-success" onclick="clearAll()">Reset</button>
+            <button class="btn btn-success" onclick="clearAllFields()">Reset</button>
         </div>
     </form>
 
@@ -171,9 +181,13 @@
         }
     }
 
-    function clearAll() {
+    function clearAllFields() {
         document.getElementById("rec_date").value = "";
         document.getElementById("employee_name").value = "";
+    }
+
+    function clearOneField(id) {
+        document.getElementById(id).value = "";
     }
 </script>
 </body>
