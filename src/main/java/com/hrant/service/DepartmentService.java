@@ -45,6 +45,8 @@ public class DepartmentService {
         List<Department> departments = null;
         try {
             departments = departmentRepository.getAll(dataSource);
+            LOGGER.warn("The list of departments was successfully found");
+            System.out.println("The list of departments was successfully found");
         } catch (SQLException e) {
             LOGGER.error(e.getMessage());
         }
