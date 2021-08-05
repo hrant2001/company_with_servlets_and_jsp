@@ -72,31 +72,31 @@
     <form action="search-emp" method="post">
         <div style="float: left; margin-right: 20px">
             <p>Search for the employee first name</p>
-            <input class="form-control" name="fname" type="text" placeholder="First Name...">
+            <input class="form-control" value="<%=request.getParameter("fname")!=null?request.getParameter("fname"):""%>" name="fname" type="text" placeholder="First Name...">
             &nbsp;
         </div>
 
         <div style="float: left; margin-right: 20px">
             <p>Search for the employee last name</p>
-            <input class="form-control" name="lname" type="text" placeholder="Last Name...">
+            <input class="form-control" value="<%=request.getParameter("lname")!=null?request.getParameter("lname"):""%>" name="lname" type="text" placeholder="Last Name...">
             &nbsp;
         </div>
 
         <div style="float: left; margin-right: 20px">
             <p>Search for the employee birthday</p>
-            <input class="form-control" name="birthday" type="text" placeholder="Birthday...">
+            <input class="form-control" value="<%=request.getParameter("birthday")!=null?request.getParameter("birthday"):""%>" name="birthday" type="text" placeholder="Birthday...">
             &nbsp;
         </div>
 
         <div style="float: left; margin-right: 20px">
             <p>Search for the position</p>
-            <input class="form-control" id="pos_autocomplete" name="position" type="text" placeholder="Position...">
+            <input class="form-control" id="pos_autocomplete" value="<%=request.getParameter("position")!=null?request.getParameter("position"):""%>" name="position" type="text" placeholder="Position...">
             &nbsp;
         </div>
 
         <div style="float: left">
             <p>Search for the department</p>
-            <input class="form-control" id="dep-autocomplete" name="department" type="text" placeholder="Department...">
+            <input class="form-control" id="dep-autocomplete" value="<%=request.getParameter("department")!=null?request.getParameter("department"):""%>" name="department" type="text" placeholder="Department...">
             &nbsp;
         </div>
         <div style="float: left">
