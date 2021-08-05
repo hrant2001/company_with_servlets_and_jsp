@@ -11,7 +11,7 @@ import jakarta.servlet.annotation.*;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "AttendanceRecordsServlet", value = "/attendance-records/*")
+@WebServlet(name = "AttendanceRecordsServlet", value = {"/attendance-records", "/search-rec"})
 public class AttendanceRecordsServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

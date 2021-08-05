@@ -29,7 +29,7 @@
 </div>
 
 <div class="container">
-    <form action="attendance-records/search-rec" method="post">
+    <form action="search-rec" method="post">
         <div style="float: left; margin-right: 20px">
             <p>Search for the entrance date</p>
             <input id="rec-date"
