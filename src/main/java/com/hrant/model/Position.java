@@ -51,7 +51,7 @@ public class Position {
 
     @Override
     public int hashCode() {
-        return Objects.hash(positionId, name, shortName);
+        return Objects.hash(positionId);
     }
 
     @Override

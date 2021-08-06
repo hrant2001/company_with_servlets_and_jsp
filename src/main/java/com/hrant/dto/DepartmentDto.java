@@ -41,7 +41,7 @@ public class DepartmentDto {
 
     @Override
     public int hashCode() {
-        return Objects.hash(departmentId, name);
+        return Objects.hash(departmentId);
     }
 
     @Override
