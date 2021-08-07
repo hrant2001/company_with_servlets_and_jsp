@@ -19,42 +19,36 @@
     <script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
     <script>
-        $(function () {
-            $(function () {
-
-                var positions = [];
-                <%List<PositionDto> pos = (ArrayList<PositionDto>) request.getAttribute("positions");
-            for (int i = 0; i < pos.size(); i++) {
-            %>
-
-                positions[<%=i%>] = '<%=pos.get(i).getName()%>';
-                <%
-                     }
-                 %>
-
-                $("#pos_autocomplete").autocomplete({
-                    source: positions
-                });
-            });
+        var positions;
+        var departments;
+        $(document).ready(function () {
+            var positionsAsString = '<%=(String)request.getAttribute("positions")%>';
+            var departmentsAsString = '<%=(String)request.getAttribute("departments")%>';
+            positions = positionsAsString.split(",");
+            departments = departmentsAsString.split(",");
+            positionAutocomplete();
+            departmentAutocomplete();
         });
-    </script>
-    <script>
-        $(function () {
 
-            var departments = [];
-            <%List<DepartmentDto> deps = (ArrayList<DepartmentDto>) request.getAttribute("departments");
-        for (int i = 0; i < deps.size(); i++) {
-        %>
-
-            departments[<%=i%>] = '<%=deps.get(i).getName()%>';
-            <%
-                 }
-             %>
-
-            $("#dep-autocomplete").autocomplete({
-                source: departments
+        function positionAutocomplete() {
+            $('#pos_autocomplete').autocomplete({
+                source: positions,
+                minLength: 0,
+                scroll: true
+            }).focus(function () {
+                $('#pos_autocomplete').autocomplete("search");
             });
-        });
+        }
+
+        function departmentAutocomplete() {
+            $('#dep-autocomplete').autocomplete({
+                source: departments,
+                minLength: 0,
+                scroll: true
+            }).focus(function () {
+                $('#dep-autocomplete').autocomplete("search");
+            });
+        }
     </script>
 </head>
 <body>
@@ -155,8 +149,8 @@
                 <td>${emp.getFName()}</td>
                 <td>${emp.getLName()}</td>
                 <td>${emp.getBirthday()}</td>
-                <td>${EmployeesServlet.findPositionById(emp.getPositionId()).name}</td>
-                <td>${EmployeesServlet.findDepartmentById(emp.getDepartmentId()).name}</td>
+                <td>${emp.getPositionName()}</td>
+                <td>${emp.getDepartmentName()}</td>
                 <td><a href="edit-emp?id=${emp.getEmployeeId()}">Edit</a>
                     &nbsp;&nbsp;&nbsp;&nbsp; <a href="delete-emp?id=${emp.getEmployeeId()}">Delete</a></td>
             </tr>

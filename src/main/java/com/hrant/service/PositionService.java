@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class PositionService {
     private static Repository<Position> positionRepository = new PositionRepository();
@@ -25,6 +27,10 @@ public class PositionService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(PositionService.class);
 
+    private PositionService() {
+        throw new AssertionError();
+    }
+
     public static PositionDto findPositionById(int id) {
         Position position = null;
         try {
@@ -35,13 +41,15 @@ public class PositionService {
         if (position == null) {
             LOGGER.warn("The position with the id of " + id + " was not found in the list");
             System.out.println("The position with the id of " + id + " was not found in the list");
+            //change!!!
+            return null;
         }
 
         return DtoConverter.positionToDto(position);
     }
 
     public static List<PositionDto> getPositions() {
-        List<Position> positions = null;
+        List<Position> positions = new ArrayList<>();
         try {
             positions = positionRepository.getAll(dataSource);
             LOGGER.warn("The list of positions was successfully found");
@@ -53,7 +61,7 @@ public class PositionService {
             LOGGER.warn("The list of employees is empty");
             System.out.println("\nThe list of employees is empty\n");
 
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         List<PositionDto> positionsDto = new ArrayList<>();
         for (Position p : positions) {
@@ -64,13 +72,7 @@ public class PositionService {
     }
 
     public static int findPositionIdByName(String name) {
-        List<PositionDto> pos = getPositions();
-        for (PositionDto p : pos) {
-            if (p.getName().equals(name))
-                return p.getPositionId();
-        }
-        LOGGER.warn("The position id with the name of " + name + " was not found in the list");
-        System.out.println("The position id with the name of " + name + " was not found in the list");
-        return -1;
+        PositionDto positionDto = getPositions().stream().filter(p -> p.getName().equalsIgnoreCase(name)).findAny().orElse(null);
+        return Objects.nonNull(positionDto) ? positionDto.getPositionId() : -1;
     }
 }

@@ -1,10 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.hrant.servlet.EmployeesServlet" %>
-<%@ page import="com.hrant.dto.PositionDto" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %>
-<%@ page import="com.hrant.dto.DepartmentDto" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -20,42 +15,34 @@
     <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 
     <script>
-        $(function () {
-            $(function () {
-
-                var positions = [];
-                <%List<PositionDto> pos = (ArrayList<PositionDto>) request.getAttribute("positions");
-            for (int i = 0; i < pos.size(); i++) {
-            %>
-
-                positions[<%=i%>] = '<%=pos.get(i).getName()%>';
-                <%
-                     }
-                 %>
-
-                $("#pos_autocomplete").autocomplete({
-                    source: positions
-                });
-            });
+        var positions;
+        var departments;
+        $(document).ready(function() {
+            var positionsAsString =  '<%=(String)request.getAttribute("positions")%>';
+            var departmentsAsString = '<%=(String)request.getAttribute("departments")%>';
+            positions = positionsAsString.split(",");
+            departments = departmentsAsString.split(",");
+            positionAutocomplete();
+            departmentAutocomplete();
         });
-    </script>
-    <script>
-        $(function () {
-
-            var departments = [];
-            <%List<DepartmentDto> deps = (ArrayList<DepartmentDto>) request.getAttribute("departments");
-        for (int i = 0; i < deps.size(); i++) {
-        %>
-
-            departments[<%=i%>] = '<%=deps.get(i).getName()%>';
-            <%
-                 }
-             %>
-
-            $("#dep_autocomplete").autocomplete({
-                source: departments
+        function positionAutocomplete (){
+            $('#pos_autocomplete').autocomplete({
+                source: positions,
+                minLength: 0,
+                scroll: true
+            }).focus(function() {
+                $('#pos_autocomplete').autocomplete("search");
             });
-        });
+        }
+        function departmentAutocomplete (){
+            $('#dep_autocomplete').autocomplete({
+                source: departments,
+                minLength: 0,
+                scroll: true
+            }).focus(function() {
+                $('#dep_autocomplete').autocomplete("search");
+            });
+        }
     </script>
 </head>
 <body>
@@ -103,13 +90,13 @@
                         <td>
                             <label>
                                 <input id="pos_autocomplete"
-                                       value="${EmployeesServlet.findPositionById(emp.getPositionId()).name}" name="position"
+                                       value="${emp.getPositionName()}" name="position"
                                        required="required">
                             </label></td>
                         <td>
                             <label>
                                 <input id="dep_autocomplete"
-                                       value="${EmployeesServlet.findDepartmentById((emp.getDepartmentId())).name}" name="department"
+                                       value="${emp.getDepartmentName()}" name="department"
                                        required="required">
                             </label></td>
                         <td>
@@ -120,8 +107,8 @@
                         <td>${emp.getFName()}</td>
                         <td>${emp.getLName()}</td>
                         <td>${emp.getBirthday()}</td>
-                        <td>${EmployeesServlet.findPositionById(emp.getPositionId()).name}</td>
-                        <td>${EmployeesServlet.findDepartmentById((emp.getDepartmentId())).name}</td>
+                        <td>${emp.getPositionName()}</td>
+                        <td>${emp.getDepartmentName()}</td>
                     </c:if>
                 </tr>
             </c:forEach>

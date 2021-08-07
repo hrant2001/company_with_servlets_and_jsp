@@ -10,8 +10,6 @@ import java.util.List;
 
 public class AttendanceRecordRepository implements Repository<AttendanceRecord> {
 
-    private static List<AttendanceRecord> records = new ArrayList<>();
-
     @Override
     public int insert(DataSource dataSource, AttendanceRecord attendanceRecord) throws SQLException {
         return 0;
@@ -29,13 +27,13 @@ public class AttendanceRecordRepository implements Repository<AttendanceRecord> 
 
     @Override
     public List<AttendanceRecord> getAll(DataSource dataSource) throws SQLException {
+        List<AttendanceRecord> records = new ArrayList<>();
         String sql = "SELECT * FROM attendance_record";
         try (Statement statement = dataSource.getConnection().createStatement()) {
-            records.clear();
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()) {
-                records.add(ResultSetConverter.resultSetToRecord(resultSet));
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    records.add(ResultSetConverter.resultSetToRecord(resultSet));
+                }
             }
             return records;
         }
@@ -60,6 +58,7 @@ public class AttendanceRecordRepository implements Repository<AttendanceRecord> 
     }
 
     public static List<AttendanceRecord> getByCriteria(DataSource dataSource, String record_date, String full_name) throws SQLException {
+        List<AttendanceRecord> records = new ArrayList<>();
         String sql = "select attendance_record.record_id,attendance_record.entrance_time,attendance_record.exit_time,employee.employee_id " +
                 "from attendance_record inner join employee on attendance_record.employee_id=employee.employee_id " +
                 "where entrance_time like concat('%',?,'%') and concat(employee.fname,' ',employee.lname) like concat('%',?,'%')";
@@ -70,7 +69,6 @@ public class AttendanceRecordRepository implements Repository<AttendanceRecord> 
             preparedStatement.setString(1, record_date);
             preparedStatement.setString(2, full_name);
 
-            records.clear();
             ResultSet resultSet = preparedStatement.executeQuery();
 
             while (resultSet.next()) {

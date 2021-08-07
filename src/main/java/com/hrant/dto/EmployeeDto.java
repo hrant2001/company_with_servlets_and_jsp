@@ -10,6 +10,8 @@ public class EmployeeDto {
     private LocalDate birthday;
     private int positionId = 1;
     private int departmentId = 1;
+    private String positionName;
+    private String departmentName;
 
     public EmployeeDto() {
     }
@@ -74,6 +76,22 @@ public class EmployeeDto {
 
     public void setDepartmentId(int departmentId) {
         this.departmentId = departmentId;
+    }
+
+    public String getPositionName() {
+        return positionName;
+    }
+
+    public void setPositionName(String positionName) {
+        this.positionName = positionName;
+    }
+
+    public String getDepartmentName() {
+        return departmentName;
+    }
+
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName;
     }
 
     @Override

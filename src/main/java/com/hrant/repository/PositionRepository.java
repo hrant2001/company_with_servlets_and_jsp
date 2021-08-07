@@ -1,4 +1,5 @@
 package com.hrant.repository;
+
 import com.hrant.model.Position;
 import com.hrant.util.ResultSetConverter;
 
@@ -8,8 +9,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class PositionRepository implements Repository<Position> {
-
-    private static List<Position> positions = new ArrayList<>();
 
     @Override
     public int insert(DataSource dataSource, Position position) throws SQLException {
@@ -33,11 +32,12 @@ public class PositionRepository implements Repository<Position> {
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            resultSet.next();
+                resultSet.next();
 
-            return ResultSetConverter.resultSetToPosition(resultSet);
+                return ResultSetConverter.resultSetToPosition(resultSet);
+            }
         }
     }
 
@@ -48,13 +48,13 @@ public class PositionRepository implements Repository<Position> {
 
     @Override
     public List<Position> getAll(DataSource dataSource) throws SQLException {
+        List<Position> positions = new ArrayList<>();
         String sql = "SELECT * FROM positions";
         try (Statement statement = dataSource.getConnection().createStatement()) {
-            positions.clear();
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()) {
-                positions.add(ResultSetConverter.resultSetToPosition(resultSet));
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    positions.add(ResultSetConverter.resultSetToPosition(resultSet));
+                }
             }
             return positions;
         }

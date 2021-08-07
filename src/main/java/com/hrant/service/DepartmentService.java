@@ -12,7 +12,9 @@ import org.slf4j.LoggerFactory;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 public class DepartmentService {
 
@@ -26,6 +28,10 @@ public class DepartmentService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(DepartmentService.class);
 
+    private DepartmentService() {
+        throw new AssertionError();
+    }
+
     public static DepartmentDto findDepartmentById(int id) {
         Department department = null;
         try {
@@ -36,13 +42,16 @@ public class DepartmentService {
         if (department == null) {
             LOGGER.warn("The department with the id of " + id + " was not found in the list");
             System.out.println("The department with the id of " + id + " was not found in the list");
+
+            //change!!!
+            return null;
         }
 
         return DtoConverter.departmentToDto(department);
     }
 
     public static List<DepartmentDto> getDepartments() {
-        List<Department> departments = null;
+        List<Department> departments = new ArrayList<>();
         try {
             departments = departmentRepository.getAll(dataSource);
             LOGGER.warn("The list of departments was successfully found");
@@ -53,7 +62,7 @@ public class DepartmentService {
         if (departments == null || departments.isEmpty()) {
             System.out.println("\nThe list of departments is empty\n");
             LOGGER.warn("The list of departments is empty");
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         List<DepartmentDto> departmentsDto = new ArrayList<>();
         for (Department d : departments) {
@@ -64,13 +73,7 @@ public class DepartmentService {
     }
 
     public static int findDepartmentIdByName(String name) {
-        List<DepartmentDto> deps = getDepartments();
-        for (DepartmentDto d : deps) {
-            if (d.getName().equals(name))
-                return d.getDepartmentId();
-        }
-        LOGGER.warn("The department id with the name of " + name + " was not found in the list");
-        System.out.println("The department id with the name of " + name + " was not found in the list");
-        return -1;
+        DepartmentDto departmentDto = getDepartments().stream().filter(d -> d.getName().equalsIgnoreCase(name)).findAny().orElse(null);
+        return Objects.nonNull(departmentDto) ? departmentDto.getDepartmentId() : -1;
     }
 }

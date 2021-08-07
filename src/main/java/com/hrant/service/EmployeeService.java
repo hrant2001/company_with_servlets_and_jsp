@@ -1,6 +1,8 @@
 package com.hrant.service;
 
+import com.hrant.dto.DepartmentDto;
 import com.hrant.dto.EmployeeDto;
+import com.hrant.dto.PositionDto;
 import com.hrant.model.Employee;
 import com.hrant.repository.EmployeeRepository;
 import com.hrant.repository.Repository;
@@ -8,7 +10,6 @@ import com.hrant.util.DataSourceFactory;
 import com.hrant.util.DtoConverter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
@@ -25,6 +26,10 @@ public class EmployeeService {
     }
 
     private final static Logger LOGGER = LoggerFactory.getLogger(EmployeeService.class);
+
+    private EmployeeService() {
+        throw new AssertionError();
+    }
 
     /**
      * Adds a new employee to the database.
@@ -94,7 +99,7 @@ public class EmployeeService {
      * @param lastName The last name of the employees to find by in the list.
      */
     public static void findEmployeeByLastName(String lastName) {
-        List<Employee> employees = null;
+        List<Employee> employees = new ArrayList<>();
         try {
             employees = EmployeeRepository.findByLastName(dataSource, lastName);
         } catch (SQLException e) {
@@ -121,6 +126,9 @@ public class EmployeeService {
         if (employee == null) {
             LOGGER.warn("The employee with the id of " + id + " was not found in the list");
             System.out.println("The employee with the id of " + id + " was not found in the list");
+            // TODO what to do if NULL
+            //change!!!
+            return null;
         }
 
         return DtoConverter.employeeToDto(employee);
@@ -149,7 +157,7 @@ public class EmployeeService {
      * Prints the list of the employees.
      */
     public static List<EmployeeDto> getEmployees() {
-        List<Employee> employees = null;
+        List<Employee> employees = new ArrayList<>();
         try {
             employees = employeeRepository.getAll(dataSource);
             LOGGER.warn("The list of employees was successfully found");
@@ -160,27 +168,15 @@ public class EmployeeService {
         if (employees == null || employees.isEmpty()) {
             LOGGER.warn("The list of employees is empty");
             System.out.println("\nThe list of employees is empty\n");
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
-        List<EmployeeDto> employeesDto = new ArrayList<>();
-        for (Employee e : employees) {
-            employeesDto.add(DtoConverter.employeeToDto(e));
-        }
-
-        return employeesDto;
+        return getEmployeeDtos(employees);
     }
 
     public static List<EmployeeDto> getEmployeesByCriteria(String fname, String lname, String birthday, int positionId, int departmentId) {
-        List<Employee> employees = null;
-        String newPositionId = String.valueOf(positionId);
-        String newDepartmentId = String.valueOf(departmentId);
-        if (positionId == -1)
-            newPositionId = "";
-        if (departmentId == -1)
-            newDepartmentId = "";
-
+        List<Employee> employees = new ArrayList<>();
         try {
-            employees = EmployeeRepository.getByCriteria(dataSource, fname, lname, birthday, newPositionId, newDepartmentId);
+            employees = EmployeeRepository.getByCriteria(dataSource, fname, lname, birthday, positionId, departmentId);
             LOGGER.warn("The list of employees with specific criteria was successfully found");
             System.out.println("The list of employees with specific criteria was successfully found");
         } catch (SQLException e) {
@@ -189,13 +185,21 @@ public class EmployeeService {
         if (employees == null || employees.isEmpty()) {
             LOGGER.warn("The searched list of employees is empty");
             System.out.println("\nThe searched list of employees is empty\n");
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
+        return getEmployeeDtos(employees);
+    }
+
+    private static List<EmployeeDto> getEmployeeDtos(List<Employee> employees) {
         List<EmployeeDto> employeesDto = new ArrayList<>();
         for (Employee e : employees) {
-            employeesDto.add(DtoConverter.employeeToDto(e));
+            EmployeeDto employeeDto = DtoConverter.employeeToDto(e);
+            PositionDto positionDto = PositionService.findPositionById(e.getPositionId());
+            DepartmentDto departmentDto = DepartmentService.findDepartmentById(e.getDepartmentId());
+            employeeDto.setPositionName(Objects.nonNull(positionDto) ? positionDto.getName() : "");
+            employeeDto.setDepartmentName(Objects.nonNull(departmentDto) ? departmentDto.getName() : "");
+            employeesDto.add(employeeDto);
         }
-
         return employeesDto;
     }
 }

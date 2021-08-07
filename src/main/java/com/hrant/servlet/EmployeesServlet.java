@@ -1,21 +1,29 @@
 package com.hrant.servlet;
 
+import com.hrant.dto.DepartmentDto;
 import com.hrant.dto.EmployeeDto;
 import com.hrant.dto.PositionDto;
-import com.hrant.dto.DepartmentDto;
 import com.hrant.service.DepartmentService;
 import com.hrant.service.EmployeeService;
 import com.hrant.service.PositionService;
-import jakarta.servlet.*;
-import jakarta.servlet.http.*;
-import jakarta.servlet.annotation.*;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @WebServlet(name = "EmployeesServlet", value = "/")
 public class EmployeesServlet extends HttpServlet {
+
+    private static final String POSITION_ATTR = "positions";
+    private static final String DEPARTMENT_ATTR = "departments";
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String action = request.getServletPath();
@@ -51,12 +59,12 @@ public class EmployeesServlet extends HttpServlet {
 
     private void showAddedRow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<EmployeeDto> employeesDto = EmployeeService.getEmployees();
-        List<PositionDto> positionsDto = PositionService.getPositions();
-        List<DepartmentDto> departmentsDto = DepartmentService.getDepartments();
+        String positionsAsString = getPositionsAsString(PositionService.getPositions());
+        String departmentsAsString = getDepartmentsAsString(DepartmentService.getDepartments());
 
         request.setAttribute("employees", employeesDto);
-        request.setAttribute("positions", positionsDto);
-        request.setAttribute("departments", departmentsDto);
+        request.setAttribute(POSITION_ATTR, positionsAsString);
+        request.setAttribute(DEPARTMENT_ATTR, departmentsAsString);
         request.getRequestDispatcher("add_employee.jsp").forward(request, response);
     }
 
@@ -89,14 +97,13 @@ public class EmployeesServlet extends HttpServlet {
 
         List<EmployeeDto> employeesDto = EmployeeService.getEmployeesByCriteria(fname, lname, birthday,
                 PositionService.findPositionIdByName(position), DepartmentService.findDepartmentIdByName(department));
-        List<PositionDto> positionsDto = PositionService.getPositions();
-        List<DepartmentDto> departmentsDto = DepartmentService.getDepartments();
+        String positionsAsString = getPositionsAsString(PositionService.getPositions());
+        String departmentsAsString = getDepartmentsAsString(DepartmentService.getDepartments());
 
         request.setAttribute("employees", employeesDto);
-        request.setAttribute("positions", positionsDto);
-        request.setAttribute("departments", departmentsDto);
+        request.setAttribute(POSITION_ATTR, positionsAsString);
+        request.setAttribute(DEPARTMENT_ATTR, departmentsAsString);
         request.getRequestDispatcher("employees.jsp").forward(request, response);
-
     }
 
     private void showEditingRow(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -104,13 +111,13 @@ public class EmployeesServlet extends HttpServlet {
 
         EmployeeDto existingEmployee = EmployeeService.findEmployeeById(id);
         List<EmployeeDto> employeesDto = EmployeeService.getEmployees();
-        List<PositionDto> positionsDto = PositionService.getPositions();
-        List<DepartmentDto> departmentsDto = DepartmentService.getDepartments();
+        String positionsAsString = getPositionsAsString(PositionService.getPositions());
+        String departmentsAsString = getDepartmentsAsString(DepartmentService.getDepartments());
 
         request.setAttribute("employee", existingEmployee);
         request.setAttribute("employees", employeesDto);
-        request.setAttribute("positions", positionsDto);
-        request.setAttribute("departments", departmentsDto);
+        request.setAttribute(POSITION_ATTR, positionsAsString);
+        request.setAttribute(DEPARTMENT_ATTR, departmentsAsString);
 
         request.getRequestDispatcher("edit_employee.jsp").forward(request, response);
     }
@@ -131,12 +138,12 @@ public class EmployeesServlet extends HttpServlet {
 
     private void listEmployees(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<EmployeeDto> employeesDto = EmployeeService.getEmployees();
-        List<PositionDto> positionsDto = PositionService.getPositions();
-        List<DepartmentDto> departmentsDto = DepartmentService.getDepartments();
 
+        String positionsAsString = getPositionsAsString(PositionService.getPositions());
+        String departmentsAsString = getDepartmentsAsString(DepartmentService.getDepartments());
+        request.setAttribute(POSITION_ATTR, positionsAsString);
+        request.setAttribute(DEPARTMENT_ATTR, departmentsAsString);
         request.setAttribute("employees", employeesDto);
-        request.setAttribute("positions", positionsDto);
-        request.setAttribute("departments", departmentsDto);
 
         request.getRequestDispatcher("employees.jsp").forward(request, response);
     }
@@ -155,5 +162,15 @@ public class EmployeesServlet extends HttpServlet {
 
     public static List<DepartmentDto> findDepartments() {
         return DepartmentService.getDepartments();
+    }
+
+    private String getPositionsAsString(List<PositionDto> positions) {
+        List<String> positionsAsString = positions.stream().map(PositionDto::getName).collect(Collectors.toList());
+        return StringUtils.join(positionsAsString, ",");
+    }
+
+    private String getDepartmentsAsString(List<DepartmentDto> departments) {
+        List<String> departmentsAsString = departments.stream().map(DepartmentDto::getName).collect(Collectors.toList());
+        return StringUtils.join(departmentsAsString, ",");
     }
 }

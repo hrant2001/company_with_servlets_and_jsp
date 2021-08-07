@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class AttendanceRecordService {
@@ -25,6 +26,10 @@ public class AttendanceRecordService {
 
     private final static Logger LOGGER = LoggerFactory.getLogger(PositionService.class);
 
+    private AttendanceRecordService() {
+        throw new AssertionError();
+    }
+
     public static AttendanceRecordDto findRecordById(int id) {
         AttendanceRecord record = null;
         try {
@@ -35,13 +40,16 @@ public class AttendanceRecordService {
         if (record == null) {
             LOGGER.warn("The record with the id of " + id + " was not found in the list");
             System.out.println("The record with the id of " + id + " was not found in the list");
+
+            //change!!!
+            return null;
         }
 
         return DtoConverter.attendanceRecordToDto(record);
     }
 
     public static List<AttendanceRecordDto> getRecords() {
-        List<AttendanceRecord> records = null;
+        List<AttendanceRecord> records = new ArrayList<>();
         try {
             records = recordRepository.getAll(dataSource);
         } catch (SQLException e) {
@@ -50,7 +58,7 @@ public class AttendanceRecordService {
         if (records == null || records.isEmpty()) {
             System.out.println("\nThe list of the records is empty\n");
             LOGGER.warn("The list of the records is empty");
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
         List<AttendanceRecordDto> recordDto = new ArrayList<>();
         for (AttendanceRecord r : records) {

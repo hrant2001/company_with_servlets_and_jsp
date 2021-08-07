@@ -10,8 +10,6 @@ import java.util.List;
 
 public class DepartmentRepository implements Repository<Department> {
 
-    private static List<Department> departments = new ArrayList<>();
-
     @Override
     public int insert(DataSource dataSource, Department o) throws SQLException {
         return 0;
@@ -29,13 +27,13 @@ public class DepartmentRepository implements Repository<Department> {
 
     @Override
     public List<Department> getAll(DataSource dataSource) throws SQLException {
+        List<Department> departments = new ArrayList<>();
         String sql = "SELECT * FROM department";
         try (Statement statement = dataSource.getConnection().createStatement()) {
-            departments.clear();
-            ResultSet resultSet = statement.executeQuery(sql);
-
-            while (resultSet.next()) {
-                departments.add(ResultSetConverter.resultSetToDepartment(resultSet));
+            try (ResultSet resultSet = statement.executeQuery(sql)) {
+                while (resultSet.next()) {
+                    departments.add(ResultSetConverter.resultSetToDepartment(resultSet));
+                }
             }
             return departments;
         }
@@ -48,11 +46,12 @@ public class DepartmentRepository implements Repository<Department> {
              PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
 
-            resultSet.next();
+                resultSet.next();
 
-            return ResultSetConverter.resultSetToDepartment(resultSet);
+                return ResultSetConverter.resultSetToDepartment(resultSet);
+            }
         }
     }
     @Override
