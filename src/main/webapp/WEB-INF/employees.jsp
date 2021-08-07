@@ -1,10 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-<%@ page import="com.hrant.servlet.EmployeesServlet" %>
-<%@ page import="com.hrant.dto.PositionDto" %>
-<%@ page import="java.util.List" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="com.hrant.dto.DepartmentDto" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
