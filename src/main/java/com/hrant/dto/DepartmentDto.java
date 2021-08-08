@@ -8,6 +8,7 @@ public class DepartmentDto {
     private String name;
 
     public DepartmentDto() {
+        name = "";
     }
 
     public DepartmentDto(int departmentId, String name) {

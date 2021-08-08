@@ -8,6 +8,7 @@ public class PositionDto {
     private String shortName;
 
     public PositionDto() {
+        name = "";
     }
 
     public PositionDto(int positionId, String name, String shortName) {

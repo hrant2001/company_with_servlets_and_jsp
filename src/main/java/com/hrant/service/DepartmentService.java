@@ -43,8 +43,7 @@ public class DepartmentService {
             LOGGER.warn("The department with the id of " + id + " was not found in the list");
             System.out.println("The department with the id of " + id + " was not found in the list");
 
-            //change!!!
-            return null;
+            return new DepartmentDto();
         }
 
         return DtoConverter.departmentToDto(department);

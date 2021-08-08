@@ -41,8 +41,7 @@ public class AttendanceRecordService {
             LOGGER.warn("The record with the id of " + id + " was not found in the list");
             System.out.println("The record with the id of " + id + " was not found in the list");
 
-            //change!!!
-            return null;
+            return new AttendanceRecordDto();
         }
 
         return DtoConverter.attendanceRecordToDto(record);

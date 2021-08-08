@@ -41,8 +41,8 @@ public class PositionService {
         if (position == null) {
             LOGGER.warn("The position with the id of " + id + " was not found in the list");
             System.out.println("The position with the id of " + id + " was not found in the list");
-            //change!!!
-            return null;
+
+            return new PositionDto();
         }
 
         return DtoConverter.positionToDto(position);

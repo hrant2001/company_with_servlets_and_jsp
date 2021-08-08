@@ -126,9 +126,8 @@ public class EmployeeService {
         if (employee == null) {
             LOGGER.warn("The employee with the id of " + id + " was not found in the list");
             System.out.println("The employee with the id of " + id + " was not found in the list");
-            // TODO what to do if NULL
-            //change!!!
-            return null;
+
+            return new EmployeeDto();
         }
 
         return DtoConverter.employeeToDto(employee);
@@ -196,8 +195,8 @@ public class EmployeeService {
             EmployeeDto employeeDto = DtoConverter.employeeToDto(e);
             PositionDto positionDto = PositionService.findPositionById(e.getPositionId());
             DepartmentDto departmentDto = DepartmentService.findDepartmentById(e.getDepartmentId());
-            employeeDto.setPositionName(Objects.nonNull(positionDto) ? positionDto.getName() : "");
-            employeeDto.setDepartmentName(Objects.nonNull(departmentDto) ? departmentDto.getName() : "");
+            employeeDto.setPositionName(positionDto.getName());
+            employeeDto.setDepartmentName(departmentDto.getName());
             employeesDto.add(employeeDto);
         }
         return employeesDto;

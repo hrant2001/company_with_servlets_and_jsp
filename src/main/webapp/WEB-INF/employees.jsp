@@ -36,12 +36,12 @@
         }
 
         function departmentAutocomplete() {
-            $('#dep-autocomplete').autocomplete({
+            $('#dep_autocomplete').autocomplete({
                 source: departments,
                 minLength: 0,
                 scroll: true
             }).focus(function () {
-                $('#dep-autocomplete').autocomplete("search");
+                $('#dep_autocomplete').autocomplete("search");
             });
         }
     </script>
@@ -112,12 +112,12 @@
         <div style="float: left; margin-right: 20px">
             <p>Search by the department</p>
             <div style="float: left">
-                <input class="form-control" id="dep-autocomplete" size="14"
+                <input class="form-control" id="dep_autocomplete" size="14"
                        value="<%=request.getParameter("department")!=null?request.getParameter("department"):""%>"
                        name="department" type="text" placeholder="Department...">
             </div>
             <div style="float: left">
-                <button id="clear_department" style="height: 33px" onclick="clearOneField('dep-autocomplete')">X</button>
+                <button id="clear_department" style="height: 33px" onclick="clearOneField('dep_autocomplete')">X</button>
             </div>
         </div>
         <div style="float: left">
