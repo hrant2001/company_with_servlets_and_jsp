@@ -1,6 +1,9 @@
 package com.hrant.service;
 
 import com.hrant.dto.AttendanceRecordDto;
+import com.hrant.dto.DepartmentDto;
+import com.hrant.dto.EmployeeDto;
+import com.hrant.dto.PositionDto;
 import com.hrant.model.AttendanceRecord;
 import com.hrant.repository.AttendanceRecordRepository;
 import com.hrant.repository.Repository;
@@ -59,12 +62,8 @@ public class AttendanceRecordService {
             LOGGER.warn("The list of the records is empty");
             return Collections.emptyList();
         }
-        List<AttendanceRecordDto> recordDto = new ArrayList<>();
-        for (AttendanceRecord r : records) {
-            recordDto.add(DtoConverter.attendanceRecordToDto(r));
-        }
 
-        return recordDto;
+        return getRecordDtos(records);
     }
 
     public static List<AttendanceRecordDto> getRecordsByCriteria(String record_date, String full_name) {
@@ -79,11 +78,19 @@ public class AttendanceRecordService {
             LOGGER.warn("The searching list of records is empty");
             return new ArrayList<>();
         }
-        List<AttendanceRecordDto> recordDto = new ArrayList<>();
+
+        return getRecordDtos(records);
+    }
+
+    private static List<AttendanceRecordDto> getRecordDtos(List<AttendanceRecord> records) {
+        List<AttendanceRecordDto> recordDtos = new ArrayList<>();
         for (AttendanceRecord r : records) {
-            recordDto.add(DtoConverter.attendanceRecordToDto(r));
+            AttendanceRecordDto recordDto = DtoConverter.attendanceRecordToDto(r);
+            EmployeeDto employeeDto = EmployeeService.findEmployeeById(r.getEmployeeId());
+            recordDto.setEmployeeFullName(employeeDto.getFName() + " " + employeeDto.getLName());
+            recordDtos.add(recordDto);
         }
 
-        return recordDto;
+        return recordDtos;
     }
 }

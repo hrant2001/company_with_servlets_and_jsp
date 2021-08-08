@@ -78,7 +78,7 @@
                 <td>${rec.getRecordId()}</td>
                 <td>${rec.getEntranceTime()}</td>
                 <td>${rec.getExitTime()}</td>
-                <td>${AttendanceRecordsServlet.findEmployeeById(rec.getEmployeeId()).FName} ${AttendanceRecordsServlet.findEmployeeById(rec.getEmployeeId()).LName}</td>
+                <td>${rec.getEmployeeFullName()}</td>
             </tr>
         </c:forEach>
         </tbody>

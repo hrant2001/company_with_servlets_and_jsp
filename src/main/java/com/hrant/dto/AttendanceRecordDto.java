@@ -8,6 +8,7 @@ public class AttendanceRecordDto {
     private LocalDateTime entranceTime;
     private LocalDateTime exitTime;
     private int employeeId;
+    private String employeeFullName;
 
     public AttendanceRecordDto() {
     }
@@ -49,6 +50,14 @@ public class AttendanceRecordDto {
 
     public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
+    }
+
+    public String getEmployeeFullName() {
+        return employeeFullName;
+    }
+
+    public void setEmployeeFullName(String employeeFullName) {
+        this.employeeFullName = employeeFullName;
     }
 
     @Override

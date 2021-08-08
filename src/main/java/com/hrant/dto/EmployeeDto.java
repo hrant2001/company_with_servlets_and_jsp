@@ -14,6 +14,8 @@ public class EmployeeDto {
     private String departmentName;
 
     public EmployeeDto() {
+        fName = "";
+        lName = "";
     }
 
     public EmployeeDto(String fName, String lName, LocalDate birthday) {
