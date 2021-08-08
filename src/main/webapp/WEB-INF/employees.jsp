@@ -88,7 +88,7 @@
         <div style="float: left; margin-right: 20px">
             <p>Search by the employee birthday</p>
             <div style="float: left">
-                <input class="form-control" size="18"
+                <input class="form-control" size="18" maxlength="10"
                        value="<%=request.getParameter("birthday")!=null?request.getParameter("birthday"):""%>"
                        id="birthday" name="birthday" type="text" placeholder="Birthday...">
             </div>
@@ -100,7 +100,7 @@
         <div style="float: left; margin-right: 20px">
             <p>Search by the position</p>
             <div style="float: left">
-                <input class="form-control" id="pos_autocomplete" size="14"
+                <input class="form-control" id="pos_autocomplete" size="17"
                        value="<%=request.getParameter("position")!=null?request.getParameter("position"):""%>"
                        name="position" type="text" placeholder="Position...">
             </div>
